@@ -4,10 +4,9 @@ declare(strict_types=1);
 namespace SouEnergy\Notification\Setup\Patch\Data;
 
 use Exception;
+use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Customer\Api\Data\CustomerInterfaceFactory;
-use Magento\Customer\Model\CustomerRegistry;
-use Magento\Framework\Encryption\EncryptorInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Store\Model\StoreManagerInterface;
@@ -21,21 +20,18 @@ class CreateDefaultCustomer implements DataPatchInterface
 
     private CustomerRepositoryInterface $customerRepository;
     private CustomerInterfaceFactory $customerFactory;
-    private CustomerRegistry $customerRegistry;
-    private EncryptorInterface $encryptor;
+    private AccountManagementInterface $accountManagement;
     private StoreManagerInterface $storeManager;
 
     public function __construct(
         CustomerRepositoryInterface $customerRepository,
         CustomerInterfaceFactory $customerFactory,
-        CustomerRegistry $customerRegistry,
-        EncryptorInterface $encryptor,
+        AccountManagementInterface $accountManagement,
         StoreManagerInterface $storeManager
     ) {
         $this->customerRepository = $customerRepository;
         $this->customerFactory = $customerFactory;
-        $this->customerRegistry = $customerRegistry;
-        $this->encryptor = $encryptor;
+        $this->accountManagement = $accountManagement;
         $this->storeManager = $storeManager;
     }
 
@@ -52,13 +48,10 @@ class CreateDefaultCustomer implements DataPatchInterface
             $customer->setFirstname(self::DEFAULT_FIRSTNAME);
             $customer->setLastname(self::DEFAULT_LASTNAME);
 
-            $passwordHash = $this->encryptor->getHash(self::DEFAULT_PASSWORD, true);
-            $savedCustomer = $this->customerRepository->save($customer, $passwordHash);
-
-            $customerModel = $this->customerRegistry->retrieveSecureData((int)$savedCustomer->getId());
-            $customerModel->setPasswordHash($passwordHash);
+            // createAccount grava a senha com o hash e salt oficial do Magento para autenticação perfeita
+            $this->accountManagement->createAccount($customer, self::DEFAULT_PASSWORD);
         } catch (Exception $e) {
-            // Fallback caso ocorra alguma exceção não crítica durante patch inicial
+            // Tratamento silencioso
         }
 
         return $this;

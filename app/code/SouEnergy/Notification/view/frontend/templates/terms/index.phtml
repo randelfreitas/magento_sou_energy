@@ -1,0 +1,49 @@
+<?php
+/** @var \Magento\Framework\View\Element\Template $block */
+$acceptUrl = $block->getUrl('souenergy/terms/accept');
+$isLoggedIn = $block->getLayout()->createBlock(\Magento\Customer\Block\Account\AuthorizationLink::class)->isLoggedIn();
+?>
+<div class="souenergy-terms-container" style="max-width: 860px; margin: 30px auto; background: #ffffff; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <div style="border-bottom: 2px solid #f1f5f9; padding-bottom: 20px; margin-bottom: 25px;">
+        <span style="color: #f57c00; font-weight: 700; font-size: 14px; text-transform: uppercase;">Atualização Legal</span>
+        <h1 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 8px 0;">Termos de Uso e Condições Gerais</h1>
+        <p style="color: #64748b; font-size: 14px; margin: 0;">Última revisão: <?= date('d/m/Y') ?></p>
+    </div>
+
+    <div class="terms-content" style="color: #334155; line-height: 1.7; font-size: 15px; margin-bottom: 35px; max-height: 380px; overflow-y: auto; padding-right: 15px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; background: #f8fafc;">
+        <h3 style="color: #0f172a; font-size: 16px; font-weight: 700; margin-top: 0;">1. Aceitação dos Termos</h3>
+        <p>Ao utilizar os serviços e plataformas da Sou Energy, o usuário declara ter lido, compreendido e aceito integralmente os presentes Termos de Uso, concordando em submeter-se às condições aqui estabelecidas.</p>
+
+        <h3 style="color: #0f172a; font-size: 16px; font-weight: 700; margin-top: 20px;">2. Notificações e Comunicações Eletrônicas</h3>
+        <p>O usuário concorda em receber comunicações operacionais, avisos legais e notificações diretamente através de seu painel de usuário e canais cadastrados, sendo de sua inteira responsabilidade manter-se informado.</p>
+
+        <h3 style="color: #0f172a; font-size: 16px; font-weight: 700; margin-top: 20px;">3. Privacidade e Proteção de Dados (LGPD)</h3>
+        <p>Os dados pessoais coletados são tratados de forma confidencial e exclusivamente para o fornecimento dos serviços, cumprimento de obrigações legais e segurança da conta.</p>
+
+        <h3 style="color: #0f172a; font-size: 16px; font-weight: 700; margin-top: 20px;">4. Atualizações dos Termos</h3>
+        <p>A Sou Energy reserva-se o direito de atualizar os termos a qualquer momento, notificando os usuários ativos para nova confirmação de aceite.</p>
+    </div>
+
+    <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div>
+            <h4 style="margin: 0 0 5px 0; color: #92400e; font-size: 16px; font-weight: 700;">Confirmação de Aceite</h4>
+            <p style="margin: 0; color: #b45309; font-size: 13px;">Ao clicar no botão ao lado, você confirma que leu e concorda com as novas diretrizes.</p>
+        </div>
+        <div>
+            <?php if ($isLoggedIn): ?>
+                <form action="<?= $block->escapeUrl($acceptUrl) ?>" method="post" style="margin: 0;">
+                    <?= $block->getBlockHtml('formkey') ?>
+                    <button type="submit" 
+                            style="background: #16a34a; color: #ffffff; border: none; padding: 12px 28px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(22,163,74,0.3); transition: all 0.2s ease;">
+                        ✓ Li e Aceito os Novos Termos
+                    </button>
+                </form>
+            <?php else: ?>
+                <a href="<?= $block->escapeUrl($block->getUrl('customer/account/login')) ?>" 
+                   style="background: #f57c00; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; display: inline-block;">
+                    Faça Login para Aceitar
+                </a>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

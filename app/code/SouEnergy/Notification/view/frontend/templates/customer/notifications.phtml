@@ -1,0 +1,62 @@
+<?php
+/** @var \SouEnergy\Notification\Block\Customer\NotificationList $block */
+$notifications = $block->getNotifications();
+?>
+<div class="souenergy-notifications-wrapper" style="font-family: inherit;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px;">
+        <h2 style="font-size: 22px; color: #1e293b; margin: 0; font-weight: 700;">Minhas Notificações</h2>
+        <span style="background: #f1f5f9; color: #475569; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;">
+            Total: <?= count($notifications) ?>
+        </span>
+    </div>
+
+    <?php if (empty($notifications)): ?>
+        <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 40px 20px; text-align: center; color: #64748b;">
+            <div style="font-size: 32px; margin-bottom: 10px;">🔔</div>
+            <p style="margin: 0; font-size: 16px; font-weight: 500;">Você não possui notificações no momento.</p>
+        </div>
+    <?php else: ?>
+        <div class="notifications-list" style="display: flex; flex-direction: column; gap: 14px;">
+            <?php foreach ($notifications as $notification): ?>
+                <?php $isRead = $notification->getIsRead(); ?>
+                <div style="border: 1px solid <?= $isRead ? '#e2e8f0' : '#fed7aa' ?>; background: <?= $isRead ? '#ffffff' : '#fffbeb' ?>; border-left: 5px solid <?= $isRead ? '#94a3b8' : '#f57c00' ?>; border-radius: 8px; padding: 18px 20px; transition: all 0.2s ease;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0;">
+                                <?= $block->escapeHtml($notification->getTitle()) ?>
+                            </h3>
+                            <?php if (!$isRead): ?>
+                                <span style="background: #f57c00; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; text-transform: uppercase;">Nova</span>
+                            <?php endif; ?>
+                        </div>
+                        <span style="font-size: 12px; color: #94a3b8;">
+                            <?= $block->escapeHtml($notification->getCreatedAt()) ?>
+                        </span>
+                    </div>
+
+                    <p style="font-size: 14px; color: #475569; margin: 0 0 14px 0; line-height: 1.5;">
+                        <?= nl2br($block->escapeHtml($notification->getMessage())) ?>
+                    </p>
+
+                    <div style="display: flex; justify-content: flex-end; gap: 12px; align-items: center;">
+                        <?php if (stripos($notification->getTitle(), 'termo') !== false || stripos($notification->getMessage(), 'termo') !== false): ?>
+                            <a href="<?= $block->escapeUrl($block->getUrl('souenergy/terms/index')) ?>" 
+                               style="background: #f57c00; color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 6px;">
+                                Acessar Termos de Uso →
+                            </a>
+                        <?php endif; ?>
+
+                        <?php if (!$isRead): ?>
+                            <a href="<?= $block->escapeUrl($block->getMarkAsReadUrl((int)$notification->getEntityId())) ?>" 
+                               style="color: #64748b; text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                                Marcar como lida
+                            </a>
+                        <?php else: ?>
+                            <span style="font-size: 12px; color: #10b981; font-weight: 600;">✓ Lida</span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</div>

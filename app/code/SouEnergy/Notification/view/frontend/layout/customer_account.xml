@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Magento\Customer\Block\Account\SortLinkInterface" name="customer-account-navigation-souenergy-notifications">
+                <arguments>
+                    <argument name="path" xsi:type="string">souenergy/notification/index</argument>
+                    <argument name="label" xsi:type="string" translate="true">🔔 Minhas Notificações</argument>
+                    <argument name="sortOrder" xsi:type="number">10</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Customer\Block\Account\SortLinkInterface" name="customer-account-navigation-souenergy-terms">
+                <arguments>
+                    <argument name="path" xsi:type="string">souenergy/terms/index</argument>
+                    <argument name="label" xsi:type="string" translate="true">📄 Termos de Uso</argument>
+                    <argument name="sortOrder" xsi:type="number">20</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

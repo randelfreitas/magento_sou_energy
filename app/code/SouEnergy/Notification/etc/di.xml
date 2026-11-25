@@ -4,19 +4,4 @@
                 type="SouEnergy\Notification\Model\Notification"/>
     <preference for="SouEnergy\Notification\Api\NotificationRepositoryInterface"
                 type="SouEnergy\Notification\Model\NotificationRepository"/>
-
-    <virtualType name="SouEnergyNotificationGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">souenergy_notification</argument>
-            <argument name="resourceModel" xsi:type="string">SouEnergy\Notification\Model\ResourceModel\Notification</argument>
-        </arguments>
-    </virtualType>
-
-    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
-        <arguments>
-            <argument name="collections" xsi:type="array">
-                <item name="souenergy_notification_listing_data_source" xsi:type="string">SouEnergyNotificationGridDataProvider</item>
-            </argument>
-        </arguments>
-    </type>
 </config>
