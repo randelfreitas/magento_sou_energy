@@ -12,7 +12,7 @@ Ambiente homologado e testado:
 | :--- | :--- | :--- |
 | **PHP** | `8.3.x` | Backend runtime (extensões: `intl`, `pdo_mysql`, `bcmath`, `soap`, `sodium`, `gd`, `zip`) |
 | **Composer** | `2.11.x` | Gerenciador de dependências PHP |
-| **MySQL** | `8.0+` | Banco de dados relacional principal |
+| **MySQL** | `8.0+ / 26.x (Homebrew)` | Banco de dados relacional principal |
 | **OpenSearch** | `2.x` | Mecanismo de busca e indexação exigido pelo Magento 2.4+ |
 | **Magento Open Source** | `2.4.7-p3` | Plataforma backend e framework de módulos |
 | **Node.js** | `v23.x` | Ambiente de execução para o frontend |
@@ -83,7 +83,7 @@ composer install
 Execute o script de configuração oficial para criar a estrutura de tabelas, chaves de criptografia e o administrador inicial:
 
 ```bash
-bin/magento setup:install \
+php -d memory_limit=2G bin/magento setup:install \
   --base-url="http://127.0.0.1:8000/" \
   --db-host="127.0.0.1" \
   --db-name="magento_sou_energy" \
@@ -101,8 +101,15 @@ bin/magento setup:install \
   --language="pt_BR" \
   --currency="BRL" \
   --timezone="America/Sao_Paulo" \
-  --use-rewrites=1
+  --use-rewrites=1 \
+  --cleanup-database \
+  --skip-db-validation
 ```
+
+> **Notas Técnicas:**
+> * `-d memory_limit=2G`: Expande temporariamente o limite de memória do PHP para o processo de instalação, evitando o estouro do limite padrão (128 MB).
+> * `--skip-db-validation`: Ignora a checagem rígida de string de versão do MySQL (necessário para versões mais recentes ou compilações modernas como MySQL 26.x do Homebrew).
+> * `--cleanup-database`: Garante que qualquer resíduo anterior de instalação incompleta seja devidamente limpo antes de recriar as tabelas.
 
 ### 4. Desativar 2FA em Ambiente Local
 Para facilitar o desenvolvimento e testes locais sem necessidade de servidor de e-mail ativo:
