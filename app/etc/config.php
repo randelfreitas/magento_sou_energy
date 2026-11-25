@@ -360,6 +360,7 @@ return [
         'PayPal_BraintreeGiftCardAccount' => 0,
         'PayPal_BraintreeGiftWrapping' => 0,
         'PayPal_BraintreeGraphQl' => 0,
-        'PayPal_BraintreeReward' => 0
+        'PayPal_BraintreeReward' => 0,
+        'SouEnergy_Notification' => 1
     ]
 ];

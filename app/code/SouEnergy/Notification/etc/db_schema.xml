@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="souenergy_notification" resource="default" engine="innodb" comment="Sou Energy Notifications Table">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Notification ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="true" comment="Customer ID (null for broadcast)"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Notification Title"/>
+        <column xsi:type="text" name="message" nullable="false" comment="Notification Message Body"/>
+        <column xsi:type="smallint" name="is_read" unsigned="true" nullable="false" default="0" comment="Is Read Flag"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="false" comment="Creation Timestamp"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+
+        <index referenceId="SOUENERGY_NOTIFICATION_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+        <index referenceId="SOUENERGY_NOTIFICATION_IS_READ" indexType="btree">
+            <column name="is_read"/>
+        </index>
+    </table>
+</schema>
