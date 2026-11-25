@@ -23,9 +23,10 @@
     },
     "version": "2.4.7-p3",
     "require": {
-        "magento/product-community-edition": "2.4.7-p3",
+        "magento/composer-dependency-version-audit-plugin": "~0.1",
         "magento/composer-root-update-plugin": "^2.0.4",
-        "magento/composer-dependency-version-audit-plugin": "~0.1"
+        "magento/product-community-edition": "2.4.7-p3",
+        "rafaelstz/traducao_magento2_pt_br": "dev-master"
     },
     "autoload": {
         "exclude-from-classmap": [
