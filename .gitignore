@@ -1,0 +1,11 @@
+/vendor/
+/app/etc/env.php
+/auth.json
+/generated/
+/var/
+/pub/static/*
+/pub/media/*
+.DS_Store
+.idea/
+.vscode/
+*.log
