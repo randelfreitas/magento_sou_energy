@@ -75,6 +75,7 @@ mysql -u root -e "CREATE DATABASE IF NOT EXISTS magento_sou_energy;"
 ### 2. Instalar as Dependências do Composer
 Dentro da pasta `magento_sou_energy`:
 ```bash
+composer config policy.advisories.block false
 composer install
 ```
 *(Caso seja a primeira instalação na sua máquina, informe sua Public Key como Username e Private Key como Password geradas no portal Adobe Marketplace).*
@@ -107,22 +108,23 @@ php -d memory_limit=2G bin/magento setup:install \
 ```
 
 > **Notas Técnicas:**
-> * `-d memory_limit=2G`: Expande temporariamente o limite de memória do PHP para o processo de instalação, evitando o estouro do limite padrão (128 MB).
-> * `--skip-db-validation`: Ignora a checagem rígida de string de versão do MySQL (necessário para versões mais recentes ou compilações modernas como MySQL 26.x do Homebrew).
+> * `-d memory_limit=2G`: Expande temporariamente o limite de memória do PHP para a instalação, evitando o estouro do limite padrão de 128 MB.
+> * `--skip-db-validation`: Ignora a validação rígida de string de versão do MySQL durante a CLI.
 > * `--cleanup-database`: Garante que qualquer resíduo anterior de instalação incompleta seja devidamente limpo antes de recriar as tabelas.
 
 ### 4. Desativar 2FA em Ambiente Local
-Para facilitar o desenvolvimento e testes locais sem necessidade de servidor de e-mail ativo:
+Para facilitar o desenvolvimento e testes locais sem necessidade de servidor de e-mail ativo, desative os módulos de 2FA em conjunto:
 ```bash
-bin/magento module:disable Magento_TwoFactorAuth
-bin/magento cache:flush
+php bin/magento module:disable Magento_AdminAdobeImsTwoFactorAuth Magento_TwoFactorAuth
+php bin/magento cache:flush
 ```
+*(Essa alteração é persistida permanentemente no arquivo `app/etc/config.php` e só precisa ser executada uma única vez após a instalação).*
 
 ---
 
-## 💻 Executando o Servidor Local
+## 💻 Executando o Servidor Local no Dia a Dia
 
-Inicie o servidor de desenvolvimento embutido do PHP apontando para o diretório público:
+Para rodar a aplicação, basta iniciar os serviços do MySQL e OpenSearch e subir o servidor web integrado do PHP:
 
 ```bash
 php -S 127.0.0.1:8000 -t pub/ phpserver/router.php
