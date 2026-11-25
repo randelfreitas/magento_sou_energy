@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <!-- Menu Principal da Sou Energy -->
+        <add id="SouEnergy_Notification::root"
+             title="Sou Energy"
+             module="SouEnergy_Notification"
+             sortOrder="15"
+             resource="SouEnergy_Notification::root"/>
+
+        <!-- Submenu Usuários Comuns (aponta para o controller customizado mantendo o menu ativo) -->
+        <add id="SouEnergy_Notification::customers"
+             title="Usuários Comuns"
+             module="SouEnergy_Notification"
+             sortOrder="10"
+             parent="SouEnergy_Notification::root"
+             action="souenergy_notification/customer/index"
+             resource="Magento_Customer::customer"/>
+
+        <!-- Submenu Notificações -->
+        <add id="SouEnergy_Notification::notifications"
+             title="Notificações"
+             module="SouEnergy_Notification"
+             sortOrder="20"
+             parent="SouEnergy_Notification::root"
+             action="souenergy_notification/notification/index"
+             resource="SouEnergy_Notification::notifications"/>
+
+        <!-- Ocultação de menus nativos não utilizados -->
+        <remove id="Magento_Backend::dashboard"/>
+        <remove id="Magento_Sales::sales"/>
+        <remove id="Magento_Catalog::catalog"/>
+        <remove id="Magento_Customer::customer"/>
+        <remove id="Magento_Backend::marketing"/>
+        <remove id="Magento_Backend::content"/>
+        <remove id="Magento_Reports::report"/>
+        <remove id="Magento_Backend::stores"/>
+        <remove id="Magento_Backend::system"/>
+        <remove id="Magento_Marketplace::partners"/>
+    </menu>
+</config>
