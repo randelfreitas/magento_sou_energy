@@ -94,5 +94,29 @@
                 </item>
             </argument>
         </field>
+        <field name="action_url">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Link de Ação (URL)</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">notification</item>
+                    <item name="dataScope" xsi:type="string">action_url</item>
+                    <item name="notice" xsi:type="string" translate="true">Opcional. Ex: souenergy/terms/index</item>
+                </item>
+            </argument>
+        </field>
+        <field name="action_label">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Texto do Botão de Ação</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">notification</item>
+                    <item name="dataScope" xsi:type="string">action_label</item>
+                    <item name="notice" xsi:type="string" translate="true">Opcional. Ex: Acessar Termos de Uso →</item>
+                </item>
+            </argument>
+        </field>
     </fieldset>
 </form>

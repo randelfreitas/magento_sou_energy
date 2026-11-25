@@ -8,7 +8,7 @@
              sortOrder="15"
              resource="SouEnergy_Notification::root"/>
 
-        <!-- Submenu Usuários Comuns (aponta para o controller customizado mantendo o menu ativo) -->
+        <!-- Submenu Usuários Comuns -->
         <add id="SouEnergy_Notification::customers"
              title="Usuários Comuns"
              module="SouEnergy_Notification"
@@ -24,6 +24,15 @@
              sortOrder="20"
              parent="SouEnergy_Notification::root"
              action="souenergy_notification/notification/index"
+             resource="SouEnergy_Notification::notifications"/>
+
+        <!-- Submenu Termos de Uso -->
+        <add id="SouEnergy_Notification::terms"
+             title="Termos de Uso"
+             module="SouEnergy_Notification"
+             sortOrder="30"
+             parent="SouEnergy_Notification::root"
+             action="souenergy_notification/terms/index"
              resource="SouEnergy_Notification::notifications"/>
 
         <!-- Ocultação de menus nativos não utilizados -->

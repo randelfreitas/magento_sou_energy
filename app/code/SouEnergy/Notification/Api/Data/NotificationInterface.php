@@ -9,6 +9,8 @@ interface NotificationInterface
     public const CUSTOMER_ID = 'customer_id';
     public const TITLE = 'title';
     public const MESSAGE = 'message';
+    public const ACTION_URL = 'action_url';
+    public const ACTION_LABEL = 'action_label';
     public const IS_READ = 'is_read';
     public const CREATED_AT = 'created_at';
 
@@ -55,6 +57,28 @@ interface NotificationInterface
      * @return $this
      */
     public function setMessage(string $message);
+
+    /**
+     * @return string|null
+     */
+    public function getActionUrl(): ?string;
+
+    /**
+     * @param string|null $actionUrl
+     * @return $this
+     */
+    public function setActionUrl(?string $actionUrl);
+
+    /**
+     * @return string|null
+     */
+    public function getActionLabel(): ?string;
+
+    /**
+     * @param string|null $actionLabel
+     * @return $this
+     */
+    public function setActionLabel(?string $actionLabel);
 
     /**
      * @return bool

@@ -39,10 +39,17 @@ $notifications = $block->getNotifications();
                     </p>
 
                     <div style="display: flex; justify-content: flex-end; gap: 12px; align-items: center;">
-                        <?php if (stripos($notification->getTitle(), 'termo') !== false || stripos($notification->getMessage(), 'termo') !== false): ?>
-                            <a href="<?= $block->escapeUrl($block->getUrl('souenergy/terms/index')) ?>" 
+                        <?php if ($notification->getActionUrl()): ?>
+                            <?php 
+                                $actionUrl = $notification->getActionUrl();
+                                if (!preg_match('~^(?:f|ht)tps?://~i', $actionUrl)) {
+                                    $actionUrl = $block->getUrl(ltrim($actionUrl, '/'));
+                                }
+                                $btnLabel = $notification->getActionLabel() ?: 'Acessar →';
+                            ?>
+                            <a href="<?= $block->escapeUrl($actionUrl) ?>" 
                                style="background: #f57c00; color: #ffffff; text-decoration: none; font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 6px;">
-                                Acessar Termos de Uso →
+                                <?= $block->escapeHtml($btnLabel) ?>
                             </a>
                         <?php endif; ?>
 

@@ -59,6 +59,28 @@ class Notification extends AbstractModel implements NotificationInterface
         return $this->setData(self::MESSAGE, $message);
     }
 
+    public function getActionUrl(): ?string
+    {
+        $url = $this->getData(self::ACTION_URL);
+        return $url !== null && $url !== '' ? (string)$url : null;
+    }
+
+    public function setActionUrl(?string $actionUrl)
+    {
+        return $this->setData(self::ACTION_URL, $actionUrl);
+    }
+
+    public function getActionLabel(): ?string
+    {
+        $label = $this->getData(self::ACTION_LABEL);
+        return $label !== null && $label !== '' ? (string)$label : null;
+    }
+
+    public function setActionLabel(?string $actionLabel)
+    {
+        return $this->setData(self::ACTION_LABEL, $actionLabel);
+    }
+
     public function getIsRead(): bool
     {
         return (bool)$this->getData(self::IS_READ);
