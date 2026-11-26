@@ -1,0 +1,9 @@
+<?php
+/** @var \Magento\Theme\Block\Html\Header\Logo $block */
+$homeUrl = $block->getUrl('customer/account');
+?>
+<a class="logo" href="<?= $block->escapeUrl($homeUrl) ?>" title="Sou Energy" style="text-decoration: none; display: inline-flex; align-items: center; padding: 12px 0;">
+    <span style="font-size: 26px; font-weight: 900; letter-spacing: -0.5px; color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        Sou<span style="color: #f57c00;">Energy</span>
+    </span>
+</a>

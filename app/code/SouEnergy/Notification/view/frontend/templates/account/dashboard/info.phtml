@@ -1,0 +1,30 @@
+<?php
+/** @var \Magento\Customer\Block\Account\Dashboard\Info $block */
+?>
+<div class="block block-dashboard-info">
+    <div class="block-title"><strong><?= $block->escapeHtml(__('Account Information')) ?></strong></div>
+    <div class="block-content">
+        <div class="box box-information" style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; background: #ffffff; max-width: 500px;">
+            <strong class="box-title" style="display: block; font-size: 16px; margin-bottom: 12px; color: #1e293b;">
+                <span><?= $block->escapeHtml(__('Contact Information')) ?></span>
+            </strong>
+            <div class="box-content" style="color: #475569; font-size: 14px; line-height: 1.6; margin-bottom: 16px;">
+                <p style="margin: 0;">
+                    <strong><?= $block->escapeHtml($block->getName()) ?></strong><br>
+                    <?= $block->escapeHtml($block->getCustomer()->getEmail()) ?>
+                </p>
+                <?= $block->getChildHtml('customer.account.dashboard.info.extra'); ?>
+            </div>
+            <div class="box-actions" style="display: flex; gap: 14px;">
+                <a class="action edit" href="<?= $block->escapeUrl($block->getUrl('customer/account/edit')) ?>" style="color: #f57c00; font-weight: 600; text-decoration: none;">
+                    <span><?= $block->escapeHtml(__('Edit')) ?></span>
+                </a>
+                <span style="color: #cbd5e1;">|</span>
+                <a href="<?= $block->escapeUrl($block->getChangePasswordUrl()) ?>" class="action change-password" style="color: #64748b; font-weight: 500; text-decoration: none;">
+                    <?= $block->escapeHtml(__('Change Password')) ?>
+                </a>
+            </div>
+        </div>
+        <?= $block->getChildHtml('additional_blocks'); ?>
+    </div>
+</div>

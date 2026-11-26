@@ -28,5 +28,12 @@
                 </arguments>
             </block>
         </referenceBlock>
+
+        <!-- Terms Modal for Customer Pages -->
+        <referenceContainer name="before.body.end">
+            <block class="SouEnergy\Notification\Block\Customer\TermsModal"
+                   name="souenergy_customer_terms_modal"
+                   template="SouEnergy_Notification::customer/terms_modal.phtml"/>
+        </referenceContainer>
     </body>
 </page>

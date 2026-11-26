@@ -1,11 +1,34 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
+        <!-- Header: Substituição da Logo Luma pela marca SouEnergy -->
+        <referenceBlock name="logo" template="SouEnergy_Notification::header/logo.phtml"/>
+
+        <!-- Header: Remoção da saudação "Bem-vindo... Alterar", link Criar Conta, busca e carrinho -->
+        <referenceBlock name="header" remove="true"/>
+        <referenceBlock name="register-link" remove="true"/>
+        <referenceBlock name="top.search" remove="true"/>
+        <referenceBlock name="minicart" remove="true"/>
+
+        <!-- Header: Sino de Notificações com badge em tempo real -->
         <referenceBlock name="header.links">
             <block class="SouEnergy\Notification\Block\Header\NotificationBell" 
                    name="souenergy_header_notification_bell" 
                    template="SouEnergy_Notification::header/notification_bell.phtml" 
                    before="-"/>
         </referenceBlock>
+
+        <!-- Footer: Manter somente o Copyright oficial (remover newsletter, privacidade, bugs e switcher) -->
+        <referenceBlock name="form.subscribe" remove="true"/>
+        <referenceBlock name="footer_links" remove="true"/>
+        <referenceBlock name="report.bugs" remove="true"/>
+        <referenceBlock name="store_switcher" remove="true"/>
+
+        <!-- Modal de Atualização dos Termos -->
+        <referenceContainer name="before.body.end">
+            <block class="SouEnergy\Notification\Block\Customer\TermsModal"
+                   name="souenergy_customer_terms_modal"
+                   template="SouEnergy_Notification::customer/terms_modal.phtml"/>
+        </referenceContainer>
     </body>
 </page>

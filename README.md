@@ -62,6 +62,7 @@ O módulo foi implementado em `app/code/SouEnergy/Notification/` seguindo a arqu
 ### 3. Gestão de Termos de Uso (Conformidade LGPD)
 - **Painel de Gestão:** Submenu dedicado no Admin para visualização da versão vigente e publicação de novas versões.
 - **Automação de Disparo:** Ao salvar uma nova versão dos termos, o sistema **dispara automaticamente uma notificação para toda a base de clientes** com o link direto para a tela de leitura e confirmação.
+- **Modal Automático de Alerta (Login):** Assim que o cliente se autentica, caso a versão vigente seja mais recente do que a versão gravada no seu perfil, um modal com *backdrop blur* é aberto em destaque solicitando o aceite imediato, com botão direto para a página de termos. Ao aceitar, o modal **nunca mais volta a aparecer** para aquela versão.
 - **Auditoria Visual no Grid de Clientes:** A coluna de termos na listagem de usuários comuns exibe dinamicamente a versão vigente no cabeçalho e classifica cada linha com badges de status:
   - `✓ v2.0 (Atualizado)`: Usuário já aceitou a versão vigente.
   - `⚠️ Desatualizado (v1.0)`: Usuário aceitou uma versão anterior.
