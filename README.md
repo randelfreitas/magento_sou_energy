@@ -4,6 +4,17 @@ Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na impleme
 
 ---
 
+## Sumário
+
+1. [Passo a passo do zero](#passo-a-passo-do-zero)
+2. [Já tenho instalado PHP, MySQL, OpenSearch](#ja-tenho-instalado)
+3. [Acessos e credenciais](#acessos-e-credenciais)
+4. [Telas de Admin](#telas-de-admin)
+5. [Telas de Usuário comum](#telas-de-usuario-comum)
+6. [Casos de testes](#casos-de-testes)
+
+---
+
 ## Stack Tecnológica e Versões
 
 | Software                | Versão Utilizada     | Função no Projeto                                                                         |
@@ -16,7 +27,7 @@ Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na impleme
 
 ---
 
-## Como Executar o Projeto Localmente (Guia Passo a Passo)
+## Como Executar o Projeto Localmente (Guia Passo a Passo) <a id="passo-a-passo-do-zero"></a>
 
 ### Passo 1: Preparação do Sistema Operacional
 
@@ -169,7 +180,7 @@ A partir do Magento 2.4+, o sistema exige um motor de busca externo (OpenSearch 
 
 ---
 
-### Passo 3: Criação de Usuário e Chaves na Adobe (Marketplace Keys)
+### Passo 3: Criação de Usuário e Chaves na Adobe (Marketplace Keys) <a id="ja-tenho-instalado"></a>
 
 Para baixar os pacotes oficiais do Magento via Composer, a Adobe exige autenticação com chaves gratuitas de desenvolvedor.
 
@@ -309,7 +320,7 @@ Você pode configurar essas credenciais globalmente no arquivo `~/.composer/auth
 
 ---
 
-## Acessos e Credenciais Pré-configuradas
+## Acessos e Credenciais Pré-configuradas <a id="acessos-e-credenciais"></a>
 
 ### 1. Painel Administrativo
 
@@ -329,7 +340,7 @@ Você pode configurar essas credenciais globalmente no arquivo `~/.composer/auth
 
 ## Visão Geral das Telas e Arquitetura do Sistema
 
-### 1. Painel Administrativo
+### 1. Painel Administrativo <a id="telas-de-admin"></a>
 
 O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 
@@ -362,7 +373,7 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 
 ---
 
-### 2. Área do Usuário Comum (Storefront)
+### 2. Área do Usuário Comum (Storefront) <a id="telas-de-usuario-comum"></a>
 
 - **Redirecionamento Automático da Raiz (`/`):**
     - Visitantes não autenticados que acessam `http://127.0.0.1:8000/` são redirecionados para a tela de Login.
@@ -398,7 +409,7 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 
 ---
 
-## Roteiro de Testes e Validação Funcional (Casos de Uso)
+## Roteiro de Testes e Validação Funcional (Casos de Uso) <a id="casos-de-testes"></a>
 
 ### Caso de Teste 1: Redirecionamento da Raiz e Login do Usuário
 
