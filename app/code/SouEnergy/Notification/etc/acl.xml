@@ -3,9 +3,7 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="SouEnergy_Notification::root" title="Sou Energy" sortOrder="10">
-                    <resource id="SouEnergy_Notification::notifications" title="Gerenciar Notificações" sortOrder="10"/>
-                </resource>
+                <resource id="SouEnergy_Notification::notifications" title="Gerenciar Notificações e Termos" sortOrder="10"/>
             </resource>
         </resources>
     </acl>

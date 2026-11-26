@@ -1,37 +1,27 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <!-- Menu Principal da Sou Energy -->
-        <add id="SouEnergy_Notification::root"
-             title="Sou Energy"
-             module="SouEnergy_Notification"
-             sortOrder="15"
-             resource="SouEnergy_Notification::root"/>
-
-        <!-- Submenu Usuários Comuns -->
+        <!-- 1. Menu Direto: Usuários -->
         <add id="SouEnergy_Notification::customers"
-             title="Usuários Comuns"
+             title="Usuários"
              module="SouEnergy_Notification"
              sortOrder="10"
-             parent="SouEnergy_Notification::root"
              action="souenergy_notification/customer/index"
              resource="Magento_Customer::customer"/>
 
-        <!-- Submenu Notificações -->
+        <!-- 2. Menu Direto: Notificações -->
         <add id="SouEnergy_Notification::notifications"
              title="Notificações"
              module="SouEnergy_Notification"
              sortOrder="20"
-             parent="SouEnergy_Notification::root"
              action="souenergy_notification/notification/index"
              resource="SouEnergy_Notification::notifications"/>
 
-        <!-- Submenu Termos de Uso -->
+        <!-- 3. Menu Direto: Termos de Uso -->
         <add id="SouEnergy_Notification::terms"
              title="Termos de Uso"
              module="SouEnergy_Notification"
              sortOrder="30"
-             parent="SouEnergy_Notification::root"
              action="souenergy_notification/terms/index"
              resource="SouEnergy_Notification::notifications"/>
 
