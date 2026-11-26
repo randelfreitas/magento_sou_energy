@@ -1,6 +1,6 @@
 # Magento Sou Energy - Módulo de Autenticação, Notificações e Termos de Uso
 
-Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na implementação de um sistema modular e desacoplado de autenticação, área restrita de usuário comum, central de notificações e gestão de termos de uso (conformidade LGPD), além de interface administrativa exclusiva e preparação completa para consumo por frontend externo em **Vue.js**.
+Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na implementação de um sistema modular e desacoplado de autenticação, área restrita de usuário comum, central de notificações e gestão de termos de uso (conformidade LGPD), além de interface administrativa exclusiva e preparação completa para consumo por frontend externo desacoplado via APIs REST.
 
 ---
 
@@ -14,10 +14,7 @@ Ambiente homologado e testado:
 | **Composer**            | `2.x` (ex: `2.11.x`)     | Gerenciador de dependências PHP                                                           |
 | **MySQL**               | `8.0+ / 8.4+ / 26.x`     | Banco de dados relacional principal                                                       |
 | **OpenSearch**          | `2.x`                    | Mecanismo de busca e indexação obrigatório do Magento 2.4+                                |
-| **Magento Open Source** | `2.4.7-p3`               | Plataforma backend, modularidade EAV e exposição de APIs                                  |
-| **Node.js**             | `v20.x` ou `v23.x`       | Ambiente de execução para o frontend desacoplado                                          |
-| **NPM**                 | `10.x`                   | Gerenciador de pacotes do ecossistema Node                                                |
-| **Vue.js**              | `3.x`                    | Frontend SPA desacoplado (Fase 4)                                                         |
+| **Magento Open Source** | `2.4.7-p3`               | Plataforma backend, modularidade EAV e exposição de APIs REST                             |
 
 ---
 
@@ -101,24 +98,7 @@ O Magento 2.4.7 requer PHP 8.3 com extensões específicas de criptografia, mani
   # Deve retornar: Composer version 2.x
   ```
 
-#### 3. Node.js e NPM
-Necessário para a suíte de scripts e o frontend desacoplado em Vue.js:
-- **No macOS:**
-  ```bash
-  brew install node
-  ```
-- **No Linux / WSL 2:**
-  ```bash
-  curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-  sudo apt install -y nodejs
-  ```
-  Verifique com:
-  ```bash
-  node -v
-  npm -v
-  ```
-
-#### 4. Banco de Dados MySQL 8.0 & Interface Gráfica
+#### 3. Banco de Dados MySQL 8.0 & Interface Gráfica
 O Magento utiliza banco relacional MySQL.
 
 - **Instalação do MySQL:**
@@ -146,8 +126,8 @@ O Magento utiliza banco relacional MySQL.
   ```
 
 - **Interface Gráfica (GUI) Recomendada:**  
-  Para visualizar e gerenciar as tabelas com facilidade, instale uma interface visual gratuita:
-  - **Sequel Ace** (macOS, gratuito na Mac App Store ou via `brew install --cask sequel-ace`) — *Excelente para Mac!*
+  Para visualizar e gerenciar as tabelas com facilidade, você pode utilizar uma interface visual gratuita:
+  - **Sequel Ace** (macOS, gratuito na Mac App Store ou via `brew install --cask sequel-ace`) — *Excelente e nativo para Mac.*
   - **DBeaver Community** (Windows, macOS e Linux, gratuito em [dbeaver.io](https://dbeaver.io/))
   - **TablePlus** (Windows, macOS e Linux em [tableplus.com](https://tableplus.com/))
   
@@ -158,8 +138,8 @@ O Magento utiliza banco relacional MySQL.
   - **Senha:** *(deixe em branco caso não tenha definido senha, ou digite a sua)*
   - **Database:** `magento_sou_energy`
 
-#### 5. OpenSearch 2.x (Mecanismo de Busca Obrigatório)
-A partir do Magento 2.4+, o sistema exige um motor de busca externo (OpenSearch ou Elasticsearch) para funcionar e indexar produtos/clientes.
+#### 4. OpenSearch 2.x (Mecanismo de Busca Obrigatório)
+A partir do Magento 2.4+, o sistema exige um motor de busca externo (OpenSearch ou Elasticsearch) para indexação e catalogação.
 
 - **Instalação do OpenSearch:**
   - **No macOS:**
@@ -167,8 +147,8 @@ A partir do Magento 2.4+, o sistema exige um motor de busca externo (OpenSearch 
     brew install opensearch
     brew services start opensearch
     ```
-  - **No Linux / WSL 2 (Instalação via repositório ou arquivo tarball):**
-    Consulte o guia oficial ou instale via script da comunidade.
+  - **No Linux / WSL 2:**
+    Siga a documentação oficial ou instale o pacote correspondente à sua distribuição.
 - **Teste de Verificação do OpenSearch:**  
   Execute no terminal:
   ```bash
@@ -219,8 +199,8 @@ Para baixar os pacotes oficiais do Magento via Composer, a Adobe exige autentica
    ```
    *(Caso não tenha criado o `auth.json`, o Composer solicitará o Username [sua Public Key] e o Password [sua Private Key] gerados na Adobe).*
 
-3. **Executar o Instalador Automático do Magento:**
-   Execute o comando abaixo para configurar o banco de dados e criar o usuário administrador:
+3. **Executar o Instalador Automático do Magento (com Bloqueios Contornados):**
+   Execute o comando completo abaixo. Ele já inclui todas as flags para contornar checagens rígidas de versão de MySQL, evitar estouro de memória e limpar tabelas residuais:
    ```bash
    php -d memory_limit=2G bin/magento setup:install \
      --base-url="http://127.0.0.1:8000/" \
@@ -233,6 +213,7 @@ Para baixar os pacotes oficiais do Magento via Composer, a Adobe exige autentica
      --admin-email="admin@souenergy.com.br" \
      --admin-user="admin" \
      --admin-password="AdminPassword123*" \
+     --backend-frontname="admin" \
      --language="pt_BR" \
      --currency="BRL" \
      --timezone="America/Fortaleza" \
@@ -240,8 +221,16 @@ Para baixar os pacotes oficiais do Magento via Composer, a Adobe exige autentica
      --search-engine="opensearch" \
      --opensearch-host="127.0.0.1" \
      --opensearch-port="9200" \
-     --opensearch-index-prefix="magento2"
+     --opensearch-index-prefix="magento2" \
+     --cleanup-database \
+     --skip-db-validation
    ```
+
+   > **Notas Técnicas dos Parâmetros Especiais:**
+   > * `-d memory_limit=2G`: Expande temporariamente o limite de memória do PHP na CLI, impedindo erros de esgotamento de memória (*Fatal error: Allowed memory size of...*).
+   > * `--skip-db-validation`: **Essencial.** Ignora a verificação rígida de versão do MySQL do Magento, permitindo rodar perfeitamente no MySQL 8.4 LTS ou versões mais recentes do Homebrew/distribuições Linux sem travar a instalação.
+   > * `--cleanup-database`: Limpa automaticamente resíduos e tabelas incompletas caso uma execução anterior tenha sido interrompida, evitando erros de *"Table already exists"*.
+   > * `--backend-frontname="admin"`: Fixa a rota do painel de administração como `/admin`, evitando que o Magento gere uma URL aleatória com hash.
 
 4. **Desativar a Autenticação de Dois Fatores (2FA) para Ambiente Local:**  
    Em ambiente de desenvolvimento local, desativar o 2FA evita a necessidade de configurar um servidor SMTP para envio de e-mails de validação:
@@ -390,9 +379,9 @@ rm -rf generated/code/SouEnergy
 
 ---
 
-## 🌐 APIs REST para o Frontend Vue.js (Fase 4)
+## 🌐 APIs REST para Integração com Frontend Desacoplado / Mobile
 
-O backend disponibiliza endpoints REST nativos prontos para integração com a SPA desacoplada:
+O backend disponibiliza endpoints REST nativos prontos para integração com qualquer aplicação externa desacoplada:
 
 | Endpoint | Método | Autenticação | Descrição |
 | :--- | :---: | :---: | :--- |
