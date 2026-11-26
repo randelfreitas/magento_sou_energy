@@ -20,8 +20,6 @@ Ambiente homologado e testado:
 
 ## Como Executar o Projeto Localmente (Guia Passo a Passo do Zero)
 
-Este guia foi elaborado para permitir que qualquer pessoa (inclusive iniciantes) consiga configurar e rodar o projeto em sua maquina local a partir do zero.
-
 ---
 
 ### Passo 1: Preparacao do Sistema Operacional
