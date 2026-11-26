@@ -23,7 +23,7 @@ class Index extends Action
     {
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('SouEnergy_Notification::customers');
-        $resultPage->getConfig()->getTitle()->prepend(__('Usuários'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Gerenciar Usuários'));
         return $resultPage;
     }
 }

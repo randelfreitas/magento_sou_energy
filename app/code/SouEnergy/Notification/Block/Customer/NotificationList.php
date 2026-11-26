@@ -37,6 +37,7 @@ class NotificationList extends Template
                 ['eq' => 0]
             ]
         );
+        $collection->addFieldToFilter(NotificationInterface::IS_ACTIVE, 1);
         $collection->setOrder(NotificationInterface::CREATED_AT, 'DESC');
         return $collection->getItems();
     }

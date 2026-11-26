@@ -38,12 +38,14 @@ class Save extends Action
                 $customerId = !empty($data['customer_id']) ? (int)$data['customer_id'] : null;
                 $actionUrl = !empty($data['action_url']) ? trim((string)$data['action_url']) : null;
                 $actionLabel = !empty($data['action_label']) ? trim((string)$data['action_label']) : null;
+                $isActive = isset($data['is_active']) ? (bool)$data['is_active'] : true;
 
                 $notification->setCustomerId($customerId);
                 $notification->setTitle((string)($data['title'] ?? ''));
                 $notification->setMessage((string)($data['message'] ?? ''));
                 $notification->setActionUrl($actionUrl);
                 $notification->setActionLabel($actionLabel);
+                $notification->setIsActive($isActive);
                 $notification->setIsRead(false);
 
                 $this->notificationRepository->save($notification);

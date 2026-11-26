@@ -91,6 +91,17 @@ class Notification extends AbstractModel implements NotificationInterface
         return $this->setData(self::IS_READ, $isRead ? 1 : 0);
     }
 
+    public function getIsActive(): bool
+    {
+        $active = $this->getData(self::IS_ACTIVE);
+        return $active === null || (bool)$active;
+    }
+
+    public function setIsActive(bool $isActive)
+    {
+        return $this->setData(self::IS_ACTIVE, $isActive ? 1 : 0);
+    }
+
     public function getCreatedAt(): ?string
     {
         return $this->getData(self::CREATED_AT) ? (string)$this->getData(self::CREATED_AT) : null;

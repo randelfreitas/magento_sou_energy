@@ -29,6 +29,24 @@ class NotificationActions extends Column
             foreach ($dataSource['data']['items'] as &$item) {
                 $name = $this->getData('name');
                 if (isset($item['entity_id'])) {
+                    $isActive = isset($item['is_active']) ? (bool)$item['is_active'] : true;
+
+                    // Ação de Ativar / Desativar
+                    $item[$name]['toggle'] = [
+                        'href' => $this->urlBuilder->getUrl(
+                            'souenergy_notification/notification/toggle',
+                            ['entity_id' => $item['entity_id']]
+                        ),
+                        'label' => $isActive ? __('Desativar') : __('Ativar'),
+                        'confirm' => [
+                            'title' => $isActive ? __('Desativar Notificação') : __('Ativar Notificação'),
+                            'message' => $isActive 
+                                ? __('Deseja desativar esta notificação? Ela não será mais exibida para os usuários.')
+                                : __('Deseja ativar esta notificação? Ela voltará a ser exibida para os usuários.')
+                        ]
+                    ];
+
+                    // Ação de Excluir
                     $item[$name]['delete'] = [
                         'href' => $this->urlBuilder->getUrl(
                             'souenergy_notification/notification/delete',

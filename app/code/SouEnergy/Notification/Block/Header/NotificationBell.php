@@ -47,6 +47,7 @@ class NotificationBell extends Template
             ]
         );
         $collection->addFieldToFilter(NotificationInterface::IS_READ, 0);
+        $collection->addFieldToFilter(NotificationInterface::IS_ACTIVE, 1);
 
         return $collection->getSize();
     }

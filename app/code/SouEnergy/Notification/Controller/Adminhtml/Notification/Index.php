@@ -23,7 +23,7 @@ class Index extends Action
     {
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('SouEnergy_Notification::notifications');
-        $resultPage->getConfig()->getTitle()->prepend(__('Sou Energy - Gerenciar Notificações'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Gerenciar Notificações'));
         return $resultPage;
     }
 }

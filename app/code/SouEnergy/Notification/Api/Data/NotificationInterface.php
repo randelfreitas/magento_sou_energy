@@ -12,6 +12,7 @@ interface NotificationInterface
     public const ACTION_URL = 'action_url';
     public const ACTION_LABEL = 'action_label';
     public const IS_READ = 'is_read';
+    public const IS_ACTIVE = 'is_active';
     public const CREATED_AT = 'created_at';
 
     /**
@@ -90,6 +91,17 @@ interface NotificationInterface
      * @return $this
      */
     public function setIsRead(bool $isRead);
+
+    /**
+     * @return bool
+     */
+    public function getIsActive(): bool;
+
+    /**
+     * @param bool $isActive
+     * @return $this
+     */
+    public function setIsActive(bool $isActive);
 
     /**
      * @return string|null

@@ -46,7 +46,7 @@ class Save extends Action
             // 1. Atualiza a versão vigente nas configurações do sistema
             $this->termsConfig->setCurrentVersion($newVersion);
 
-            // 2. Cria automaticamente a notificação global para todos os usuários
+            // 2. Cria automaticamente a notificação global para todos os usuários (Ativa por padrão)
             $notificationTitle = !empty($title) ? $title : sprintf('Atualização dos Termos de Uso (%s)', $newVersion);
             $notificationMessage = !empty($message) ? $message : sprintf(
                 'Publicamos uma nova versão dos Termos de Uso (%s). Por favor, acesse o link para ler e confirmar seu aceite.',
@@ -59,6 +59,7 @@ class Save extends Action
             $notification->setMessage($notificationMessage);
             $notification->setActionUrl('souenergy/terms/index');
             $notification->setActionLabel('Acessar Novos Termos →');
+            $notification->setIsActive(true);
             $notification->setIsRead(false);
 
             $this->notificationRepository->save($notification);

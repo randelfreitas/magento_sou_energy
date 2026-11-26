@@ -53,6 +53,24 @@
                 <item name="opened" xsi:type="boolean">true</item>
             </item>
         </argument>
+        <field name="is_active">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Status da Notificação</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="source" xsi:type="string">notification</item>
+                    <item name="dataScope" xsi:type="string">is_active</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="default" xsi:type="number">1</item>
+                    <item name="notice" xsi:type="string" translate="true">Notificações desativadas não são exibidas para os clientes e não disparam alertas.</item>
+                </item>
+            </argument>
+        </field>
         <field name="title">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
