@@ -1,359 +1,499 @@
-# Magento Sou Energy - Módulo de Autenticação, Notificações e Termos de Uso
+# Magento Sou Energy - Modulo de Autenticacao, Notificacoes e Termos de Uso
 
-Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na implementação de um sistema modular e desacoplado de autenticação, área restrita de usuário comum, central de notificações e gestão de termos de uso (conformidade LGPD), além de interface administrativa exclusiva e preparação completa para consumo por frontend externo desacoplado via APIs REST.
+Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na implementacao de um sistema modular e desacoplado de autenticacao, area restrita de usuario comum, central de notificacoes e gestao de termos de uso (conformidade LGPD), alem de interface administrativa exclusiva e preparacao completa para consumo por frontend externo desacoplado via APIs REST.
 
 ---
 
-## 🛠️ Stack Tecnológica e Versões
+## Stack Tecnologica e Versoes
 
 Ambiente homologado e testado:
 
-| Software                | Versão Utilizada         | Função no Projeto                                                                         |
-| :---------------------- | :----------------------- | :---------------------------------------------------------------------------------------- |
-| **PHP**                 | `8.3.x`                  | Backend runtime (extensões: `intl`, `pdo_mysql`, `bcmath`, `soap`, `sodium`, `gd`, `zip`) |
-| **Composer**            | `2.x` (ex: `2.11.x`)     | Gerenciador de dependências PHP                                                           |
-| **MySQL**               | `8.0+ / 8.4+ / 26.x`     | Banco de dados relacional principal                                                       |
-| **OpenSearch**          | `2.x`                    | Mecanismo de busca e indexação obrigatório do Magento 2.4+                                |
-| **Magento Open Source** | `2.4.7-p3`               | Plataforma backend, modularidade EAV e exposição de APIs REST                             |
+| Software                | Versao Utilizada     | Funcao no Projeto                                                                         |
+| :---------------------- | :------------------- | :---------------------------------------------------------------------------------------- |
+| **PHP**                 | `8.3.x`              | Backend runtime (extensoes: `intl`, `pdo_mysql`, `bcmath`, `soap`, `sodium`, `gd`, `zip`) |
+| **Composer**            | `2.x` (ex: `2.11.x`) | Gerenciador de dependencias PHP                                                           |
+| **MySQL**               | `8.0+ / 8.4+ / 26.x` | Banco de dados relacional principal                                                       |
+| **OpenSearch**          | `2.x`                | Mecanismo de busca e indexacao obrigatorio do Magento 2.4+                                |
+| **Magento Open Source** | `2.4.7-p3`           | Plataforma backend, modularidade EAV e exposicao de APIs REST                             |
 
 ---
 
-## 🚀 Como Executar o Projeto Localmente (Guia Passo a Passo do Zero)
+## Como Executar o Projeto Localmente (Guia Passo a Passo do Zero)
 
-Este guia foi elaborado para permitir que **qualquer pessoa (inclusive iniciantes)** consiga configurar e rodar o projeto em sua máquina local a partir do zero.
+Este guia foi elaborado para permitir que qualquer pessoa (inclusive iniciantes) consiga configurar e rodar o projeto em sua maquina local a partir do zero.
 
 ---
 
-### Passo 1: Preparação do Sistema Operacional
+### Passo 1: Preparacao do Sistema Operacional
 
 #### macOS (Apple Silicon M1/M2/M3 ou Intel)
-Recomenda-se utilizar o gerenciador de pacotes **Homebrew**. Caso ainda não o tenha instalado, abra o Terminal e execute:
+
+Recomenda-se utilizar o gerenciador de pacotes **Homebrew**. Caso ainda nao o tenha instalado, abra o Terminal e execute:
+
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
 #### Windows
-O Magento 2 **não roda nativamente no Prompt de Comando ou PowerShell do Windows** devido a requisitos de symlinks (links simbólicos) e permissões de arquivos no padrão POSIX.  
-Por isso, é mandatório utilizar o **WSL 2 (Windows Subsystem for Linux)**:
+
+O Magento 2 nao roda nativamente no Prompt de Comando ou PowerShell do Windows devido a requisitos de links simbolicos e permissoes POSIX.  
+Por isso, e mandatorio utilizar o **WSL 2 (Windows Subsystem for Linux)**:
+
 1. Abra o PowerShell como Administrador e execute:
-   ```powershell
-   wsl --install -d Ubuntu
-   ```
-2. Reinicie o computador se solicitado e abra o terminal do **Ubuntu** para executar todos os comandos dos próximos passos.
+    ```powershell
+    wsl --install -d Ubuntu
+    ```
+2. Reinicie o computador se solicitado e abra o terminal do **Ubuntu** para executar todos os comandos dos proximos passos.
 
 #### Linux (Ubuntu / Debian)
-Atualize os repositórios do sistema:
+
+Atualize os repositorios do sistema:
+
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
 ---
 
-### Passo 2: Instalação das Dependências de Sistema
+### Passo 2: Instalacao das Dependencias de Sistema
 
-#### 1. PHP 8.3 e Extensões Necessárias
-O Magento 2.4.7 requer PHP 8.3 com extensões específicas de criptografia, manipulação de imagens, XML e banco de dados.
+#### 1. PHP 8.3 e Extensoes Necessarias
+
+O Magento 2.4.7 requer PHP 8.3 com extensoes especificas de criptografia, manipulacao de imagens, XML e banco de dados.
 
 - **No macOS (via Homebrew):**
-  ```bash
-  brew install php@8.3
-  brew link --force --overwrite php@8.3
-  ```
-  Verifique a versão:
-  ```bash
-  php -v
-  # Deve retornar: PHP 8.3.x
-  ```
+
+    ```bash
+    brew install php@8.3
+    brew link --force --overwrite php@8.3
+    ```
+
+    Verifique a versao:
+
+    ```bash
+    php -v
+    # Deve retornar: PHP 8.3.x
+    ```
 
 - **No Ubuntu / Linux / WSL 2:**
-  ```bash
-  sudo apt install -y software-properties-common
-  sudo add-apt-repository ppa:ondrej/php -y
-  sudo apt update
-  sudo apt install -y php8.3 php8.3-cli php8.3-common php8.3-mysql php8.3-intl php8.3-bcmath \
-                      php8.3-soap php8.3-xml php8.3-zip php8.3-gd php8.3-curl php8.3-mbstring php8.3-sodium
-  ```
 
-- **Ajuste de Memória do PHP (`php.ini`):**  
-  O Magento necessita de bastante memória para compilação e reindexação. Localize seu `php.ini` (com `php --ini`) e garanta os seguintes valores:
-  ```ini
-  memory_limit = 2G
-  max_execution_time = 1800
-  zlib.output_compression = On
-  ```
+    ```bash
+    sudo apt install -y software-properties-common
+    sudo add-apt-repository ppa:ondrej/php -y
+    sudo apt update
+    sudo apt install -y php8.3 php8.3-cli php8.3-common php8.3-mysql php8.3-intl php8.3-bcmath \
+                        php8.3-soap php8.3-xml php8.3-zip php8.3-gd php8.3-curl php8.3-mbstring php8.3-sodium
+    ```
+
+- **Ajuste de Memoria do PHP (`php.ini`):**  
+  O Magento necessita de memoria adequada para compilacao e reindexacao. Localize seu `php.ini` (com `php --ini`) e garanta os seguintes valores:
+    ```ini
+    memory_limit = 2G
+    max_execution_time = 1800
+    zlib.output_compression = On
+    ```
 
 #### 2. Composer 2 (Gerenciador de Pacotes PHP)
-- **No macOS:**
-  ```bash
-  brew install composer
-  ```
-- **No Linux / WSL 2:**
-  ```bash
-  curl -sS https://getcomposer.org/installer | php
-  sudo mv composer.phar /usr/local/bin/composer
-  ```
-  Verifique com:
-  ```bash
-  composer --version
-  # Deve retornar: Composer version 2.x
-  ```
 
-#### 3. Banco de Dados MySQL 8.0 & Interface Gráfica
+- **No macOS:**
+    ```bash
+    brew install composer
+    ```
+- **No Linux / WSL 2:**
+    ```bash
+    curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/local/bin/composer
+    ```
+    Verifique com:
+    ```bash
+    composer --version
+    # Deve retornar: Composer version 2.x
+    ```
+
+#### 3. Banco de Dados MySQL 8.0 e Interface Grafica
+
 O Magento utiliza banco relacional MySQL.
 
-- **Instalação do MySQL:**
-  - **No macOS:**
-    ```bash
-    brew install mysql
-    brew services start mysql
-    ```
-  - **No Linux / WSL 2:**
-    ```bash
-    sudo apt install -y mysql-server
-    sudo systemctl start mysql
-    ```
+- **Instalacao do MySQL:**
+    - **No macOS:**
+        ```bash
+        brew install mysql
+        brew services start mysql
+        ```
+    - **No Linux / WSL 2:**
+        ```bash
+        sudo apt install -y mysql-server
+        sudo systemctl start mysql
+        ```
 
-- **Criação do Banco de Dados:**  
+- **Criacao do Banco de Dados:**  
   Acesse o MySQL pelo terminal:
-  ```bash
-  mysql -u root
-  ```
-  *(Se você tiver configurado senha para o root, use `mysql -u root -p`).*  
-  Em seguida, crie o banco de dados do projeto:
-  ```sql
-  CREATE DATABASE magento_sou_energy CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-  EXIT;
-  ```
 
-- **Interface Gráfica (GUI) Recomendada:**  
-  Para visualizar e gerenciar as tabelas com facilidade, você pode utilizar uma interface visual gratuita:
-  - **Sequel Ace** (macOS, gratuito na Mac App Store ou via `brew install --cask sequel-ace`) — *Excelente e nativo para Mac.*
-  - **DBeaver Community** (Windows, macOS e Linux, gratuito em [dbeaver.io](https://dbeaver.io/))
-  - **TablePlus** (Windows, macOS e Linux em [tableplus.com](https://tableplus.com/))
-  
-  **Configuração da Conexão na GUI:**
-  - **Host:** `127.0.0.1`
-  - **Porta:** `3306`
-  - **Usuário:** `root`
-  - **Senha:** *(deixe em branco caso não tenha definido senha, ou digite a sua)*
-  - **Database:** `magento_sou_energy`
-
-#### 4. OpenSearch 2.x (Mecanismo de Busca Obrigatório)
-A partir do Magento 2.4+, o sistema exige um motor de busca externo (OpenSearch ou Elasticsearch) para indexação e catalogação.
-
-- **Instalação do OpenSearch:**
-  - **No macOS:**
     ```bash
-    brew install opensearch
-    brew services start opensearch
+    mysql -u root
     ```
-  - **No Linux / WSL 2:**
-    Siga a documentação oficial ou instale o pacote correspondente à sua distribuição.
-- **Teste de Verificação do OpenSearch:**  
+
+    _(Se voce configurou senha para o root, utilize `mysql -u root -p`)._  
+    Em seguida, crie a base de dados do projeto:
+
+    ```sql
+    CREATE DATABASE magento_sou_energy CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    EXIT;
+    ```
+
+- **Interface Grafica (GUI) Recomendada:**  
+  Para gerenciar as tabelas e dados visualmente, utilize ferramentas como:
+    - **Sequel Ace** (macOS, gratuito na Mac App Store ou via `brew install --cask sequel-ace`).
+    - **DBeaver Community** (Windows, macOS e Linux, gratuito em [dbeaver.io](https://dbeaver.io/)).
+    - **TablePlus** (Windows, macOS e Linux em [tableplus.com](https://tableplus.com/)).
+
+    **Parametros de Conexao:**
+    - **Host:** `127.0.0.1`
+    - **Porta:** `3306`
+    - **Usuario:** `root`
+    - **Senha:** _(deixe em branco caso nao tenha definido, ou informe a sua senha)_
+    - **Database:** `magento_sou_energy`
+
+#### 4. OpenSearch 2.x (Mecanismo de Busca Obrigatorio)
+
+A partir do Magento 2.4+, o sistema exige um motor de busca externo (OpenSearch ou Elasticsearch) para indexacao e funcionamento do catalogo e cadastros.
+
+- **Instalacao do OpenSearch:**
+    - **No macOS:**
+        ```bash
+        brew install opensearch
+        brew services start opensearch
+        ```
+    - **No Linux / WSL 2:**
+      Instale o OpenSearch conforme a documentacao oficial da sua distribuicao Linux.
+- **Teste de Verificacao do OpenSearch:**  
   Execute no terminal:
-  ```bash
-  curl http://127.0.0.1:9200/
-  ```
-  Você deve receber um JSON informando `"tagline": "The OpenSearch Project: https://opensearch.org/"`.
+    ```bash
+    curl http://127.0.0.1:9200/
+    ```
+    O retorno deve ser um JSON informando `"tagline": "The OpenSearch Project: https://opensearch.org/"`.
 
 ---
 
-### Passo 3: Criação de Usuário e Chaves na Adobe (Marketplace Keys)
+### Passo 3: Criacao de Usuario e Chaves na Adobe (Marketplace Keys)
 
-Para baixar os pacotes oficiais do Magento via Composer, a Adobe exige autenticação com chaves gratuitas de desenvolvedor.
+Para baixar os pacotes oficiais do Magento via Composer, a Adobe exige autenticacao com chaves gratuitas de desenvolvedor.
 
-1. Acesse o site do [Adobe Commerce Marketplace](https://marketplace.magento.com/) e crie uma conta gratuita (Adobe ID) ou faça login caso já possua.
-2. No canto superior direito, clique no seu nome de usuário e selecione **My Profile**.
-3. Na seção lateral ou menu **Marketplace**, clique em **Access Keys** (sob a aba *Developers*).
-4. Na aba **Magento 2**, clique no botão **Create a New Access Key**.
-5. Dê um nome de identificação (ex: `Magento Local`) e confirme.
-6. O sistema gerará duas chaves:
-   - **Public Key:** Esta chave funciona como o seu **Username**.
-   - **Private Key:** Esta chave funciona como o seu **Password**.
+1. Acesse o portal [Adobe Commerce Marketplace](https://marketplace.magento.com/) e faca login ou crie uma conta gratuita (Adobe ID).
+2. No canto superior direito, clique no seu nome e acesse **My Profile**.
+3. Na secao lateral ou menu **Marketplace**, clique em **Access Keys** (sob a aba _Developers_).
+4. Na aba **Magento 2**, clique em **Create a New Access Key**.
+5. Informe um nome identificador (ex: `Magento Local`) e confirme.
+6. O sistema gerara duas chaves:
+    - **Public Key:** Utilizada como o seu **Username**.
+    - **Private Key:** Utilizada como a sua **Password**.
 
-> [!TIP]
-> Você pode salvar essas chaves no arquivo global `~/.composer/auth.json` para não precisar digitá-las repetidamente:
-> ```json
-> {
->     "http-basic": {
->         "repo.magento.com": {
->             "username": "SUA_PUBLIC_KEY_AQUI",
->             "password": "SUA_PRIVATE_KEY_AQUI"
->         }
->     }
-> }
-> ```
+Voce pode configurar essas credenciais globalmente no arquivo `~/.composer/auth.json`:
+
+```json
+{
+    "http-basic": {
+        "repo.magento.com": {
+            "username": "SUA_PUBLIC_KEY_AQUI",
+            "password": "SUA_PRIVATE_KEY_AQUI"
+        }
+    }
+}
+```
 
 ---
 
-### Passo 4: Instalação e Configuração do Magento
+### Passo 4: Instalacao e Configuracao do Magento
 
 1. **Acessar a Pasta do Projeto:**
-   ```bash
-   cd magento_sou_energy
-   ```
 
-2. **Instalar as Dependências do Composer:**
-   ```bash
-   composer install
-   ```
-   *(Caso não tenha criado o `auth.json`, o Composer solicitará o Username [sua Public Key] e o Password [sua Private Key] gerados na Adobe).*
+    ```bash
+    cd magento_sou_energy
+    ```
 
-3. **Executar o Instalador Automático do Magento (com Bloqueios Contornados):**
-   Execute o comando completo abaixo. Ele já inclui todas as flags para contornar checagens rígidas de versão de MySQL, evitar estouro de memória e limpar tabelas residuais:
-   ```bash
-   php -d memory_limit=2G bin/magento setup:install \
-     --base-url="http://127.0.0.1:8000/" \
-     --db-host="127.0.0.1" \
-     --db-name="magento_sou_energy" \
-     --db-user="root" \
-     --db-password="" \
-     --admin-firstname="Admin" \
-     --admin-lastname="SouEnergy" \
-     --admin-email="admin@souenergy.com.br" \
-     --admin-user="admin" \
-     --admin-password="AdminPassword123*" \
-     --backend-frontname="admin" \
-     --language="pt_BR" \
-     --currency="BRL" \
-     --timezone="America/Fortaleza" \
-     --use-rewrites="1" \
-     --search-engine="opensearch" \
-     --opensearch-host="127.0.0.1" \
-     --opensearch-port="9200" \
-     --opensearch-index-prefix="magento2" \
-     --cleanup-database \
-     --skip-db-validation
-   ```
+2. **Instalar as Dependencias via Composer:**
 
-   > **Notas Técnicas dos Parâmetros Especiais:**
-   > * `-d memory_limit=2G`: Expande temporariamente o limite de memória do PHP na CLI, impedindo erros de esgotamento de memória (*Fatal error: Allowed memory size of...*).
-   > * `--skip-db-validation`: **Essencial.** Ignora a verificação rígida de versão do MySQL do Magento, permitindo rodar perfeitamente no MySQL 8.4 LTS ou versões mais recentes do Homebrew/distribuições Linux sem travar a instalação.
-   > * `--cleanup-database`: Limpa automaticamente resíduos e tabelas incompletas caso uma execução anterior tenha sido interrompida, evitando erros de *"Table already exists"*.
-   > * `--backend-frontname="admin"`: Fixa a rota do painel de administração como `/admin`, evitando que o Magento gere uma URL aleatória com hash.
+    ```bash
+    composer install
+    ```
 
-4. **Desativar a Autenticação de Dois Fatores (2FA) para Ambiente Local:**  
-   Em ambiente de desenvolvimento local, desativar o 2FA evita a necessidade de configurar um servidor SMTP para envio de e-mails de validação:
-   ```bash
-   php bin/magento module:disable Magento_TwoFactorAuth Magento_AdminAdobeImsTwoFactorAuth
-   ```
+3. **Executar o Instalador Automatico do Magento:**
+   Execute o comando completo abaixo com todas as flags necessarias para contornar checagens rigidas de versao de MySQL e memoria:
 
-5. **Habilitar o Módulo SouEnergy e Atualizar o Banco:**
-   ```bash
-   php bin/magento module:enable SouEnergy_Notification
-   php -d memory_limit=2G bin/magento setup:upgrade --keep-generated
-   php -d memory_limit=2G bin/magento setup:di:compile
-   php bin/magento cache:flush
-   ```
+    ```bash
+    php -d memory_limit=2G bin/magento setup:install \
+      --base-url="http://127.0.0.1:8000/" \
+      --db-host="127.0.0.1" \
+      --db-name="magento_sou_energy" \
+      --db-user="root" \
+      --db-password="" \
+      --admin-firstname="Admin" \
+      --admin-lastname="SouEnergy" \
+      --admin-email="admin@souenergy.com.br" \
+      --admin-user="admin" \
+      --admin-password="AdminPassword123*" \
+      --backend-frontname="admin" \
+      --language="pt_BR" \
+      --currency="BRL" \
+      --timezone="America/Fortaleza" \
+      --use-rewrites="1" \
+      --search-engine="opensearch" \
+      --opensearch-host="127.0.0.1" \
+      --opensearch-port="9200" \
+      --opensearch-index-prefix="magento2" \
+      --cleanup-database \
+      --skip-db-validation
+    ```
+
+    **Notas Tecnicas dos Parametros:**
+    - `-d memory_limit=2G`: Eleva o limite de memoria do PHP para a instalacao, prevenindo estouros de memoria na CLI.
+    - `--skip-db-validation`: Ignora a checagem rigida de versao do MySQL do Magento, permitindo a execucao em MySQL 8.4 LTS ou versoes recentes sem bloqueios.
+    - `--cleanup-database`: Limpa tabelas residuais de tentativas anteriores interrompidas, evitando erros de duplicidade.
+    - `--backend-frontname="admin"`: Fixa a rota do painel administrativo em `/admin`.
+
+4. **Desativar a Autenticacao de Dois Fatores (2FA) para Desenvolvimento Local:**
+
+    ```bash
+    php bin/magento module:disable Magento_TwoFactorAuth Magento_AdminAdobeImsTwoFactorAuth
+    ```
+
+5. **Habilitar o Modulo SouEnergy e Atualizar o Banco:**
+    ```bash
+    php bin/magento module:enable SouEnergy_Notification
+    php -d memory_limit=2G bin/magento setup:upgrade --keep-generated
+    php -d memory_limit=2G bin/magento setup:di:compile
+    php bin/magento cache:flush
+    ```
 
 ---
 
-### Passo 5: Inicialização do Servidor e Acesso à Aplicação
+### Passo 5: Inicializacao do Servidor e Acesso a Aplicacao
 
-1. **Certifique-se de que os serviços de apoio estão rodando:**
-   - No macOS:
-     ```bash
-     brew services start mysql
-     brew services start opensearch
-     ```
-   - No Linux / WSL 2:
-     ```bash
-     sudo systemctl start mysql
-     sudo systemctl start opensearch
-     ```
+1. **Verificar os servicos de apoio:**
+    - No macOS:
+        ```bash
+        brew services start mysql
+        brew services start opensearch
+        ```
+    - No Linux / WSL 2:
+        ```bash
+        sudo systemctl start mysql
+        sudo systemctl start opensearch
+        ```
 
-2. **Inicie o Servidor Embutido do Magento:**
+2. **Iniciar o Servidor Embutido do Magento:**
    Dentro da pasta `magento_sou_energy`, execute:
-   ```bash
-   php -S 127.0.0.1:8000 -t pub/ phpserver/router.php
-   ```
 
-3. **Pronto! Acesse no seu navegador:**
-   - **Loja / Área do Usuário:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-   - **Painel Administrativo:** [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
+    ```bash
+    php -S 127.0.0.1:8000 -t pub/ phpserver/router.php
+    ```
+
+3. **Acessar a Aplicacao:**
+    - **Area do Usuario Comum:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+    - **Painel Administrativo:** [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
 
 ---
 
-## 🔗 Acessos e Credenciais Pré-configuradas
+## Acessos e Credenciais Pre-configuradas
 
 ### 1. Painel Administrativo
+
 - **URL:** [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
-- **Usuário:** `admin`
+- **Usuario:** `admin`
 - **Senha:** `AdminPassword123*`
 
-### 2. Usuário Comum (Área do Cliente)
-- **URL Base:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)  
-  *(A rota raiz `/` detecta o status de sessão e redireciona automaticamente para o login ou painel do cliente).*
-- **URL de Login Direta:** [http://127.0.0.1:8000/customer/account/login/](http://127.0.0.1:8000/customer/account/login/)
+### 2. Usuario Comum (Area do Cliente)
+
+- **URL Base:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/) _(redireciona automaticamente para login ou painel)_
+- **URL Direta de Login:** [http://127.0.0.1:8000/customer/account/login/](http://127.0.0.1:8000/customer/account/login/)
 - **E-mail:** `randel@souenergy.com.br`
 - **Senha:** `UserPassword123*`
-- **Nome:** Marcos Randel  
-*(Usuário provisionado e indexado automaticamente pelo módulo).*
+- **Nome:** Marcos Randel _(criado automaticamente via Data Patch)_
 
 ---
 
-## 🎛️ Painel Administrativo Exclusivo (Menu Lateral)
+## Visao Geral das Telas e Arquitetura do Sistema
 
-O menu administrativo foi reestruturado de forma limpa, direta e padronizada. Todas as opções foram organizadas no primeiro nível da barra lateral esquerda, com títulos uniformes:
+O sistema foi estruturado para atender aos requisitos de conformidade legal (LGPD), comunicacao com o cliente e gestao administrativa simplificada.
 
-```
-[Barra Lateral do Admin]
- ├── 👥 Gerenciar Usuários         -> Listagem de clientes e auditoria de versão dos termos
- ├── 🔔 Gerenciar Notificações     -> Listagem, disparo, alternância de status (Ativa/Inativa)
- └── 📄 Gerenciar Termos de Uso    -> Controle da versão vigente em tela cheia e disparo automático
-```
+### 1. Painel Administrativo
 
----
+O menu lateral foi remodelado com tres entradas diretas de primeiro nivel:
 
-## 📦 Funcionalidades do Módulo `SouEnergy_Notification`
+- **Gerenciar Usuarios (`/admin/souenergy_notification/customer/index`):**
+    - Grid de clientes com colunas dedicadas para auditoria de termos.
+    - O cabecalho da coluna de termos indica a versao vigente do sistema (ex: `Termos de Uso (Vigente: v2.0)`).
+    - Cada registro exibe badges de conformidade:
+        - `✓ v2.0 (Atualizado)`: Usuario já aceitou a versão vigente.
+        - `⚠️ Desatualizado (v1.0)`: Usuario com versão anterior.
+        - `❌ Não Aceitou`: Usuario com aceite pendente.
+    - Exibe data e hora exatas em que o aceite foi registrado pelo cliente.
 
-O módulo está localizado em `app/code/SouEnergy/Notification/` e foi concebido respeitando os padrões de arquitetura limpa do Magento 2:
+- **Gerenciar Notificacoes (`/admin/souenergy_notification/notification/index`):**
+    - Grid com ID, Titulo, Mensagem, Destinatario (Geral ou Cliente Especifico), Link de Acao e Status (`✓ Ativa` / `✕ Inativa`).
+    - Coluna de Acoes com alternancia de status em 1 clique (Ativar / Desativar) e botao de exclusao.
+    - Desativar uma notificacao reflete instantaneamente no storefront, ocultando-a do sino e da listagem do cliente.
 
-### 1. Usuário Comum e Experiência Enxuta
-- **Redirecionamento Inteligente da Raiz:** Ao acessar `http://127.0.0.1:8000/`, o visitante não-autenticado é direcionado imediatamente para a tela de Login (`/customer/account/login/`). Se já estiver logado, vai direto para sua área restrita (`/customer/account/`).
-- **Tela de Login Centralizada e Clean:** O formulário de login foi simplificado em formato de card centralizado, removendo ruídos de e-commerce como o bloco "Novos Clientes" e cabeçalhos genéricos.
-- **Identidade Visual SouEnergy:** O logotipo padrão Luma foi substituído pelo logo corporativo estilizado "SouEnergy". Elementos de loja (carrinho de compras, barra de busca de produtos, comparadores e seletor de lojas) foram removidos da interface.
-- **Painel do Cliente Minimalista:** A barra lateral interna da conta exibe estritamente:
-  - **Dados da Conta** (informações cadastrais essenciais).
-  - **🔔 Minhas Notificações** (central de avisos com contador e botão de leitura).
-- **Atributos de Auditoria EAV do Cliente:**
-  - `terms_version`: Versão do termo aceita pelo usuário (ex: `v1.0`, `v2.0`).
-  - `terms_accepted_at`: Data e hora exatas do consentimento (timestamp auditável para fins de LGPD).
+- **Criar Notificacao (`/admin/souenergy_notification/notification/new`):**
+    - Formulario administrativo com selecao de tipo de destinatario (Todos os clientes ou cliente especifico via autocomplete/ID).
+    - Campos opcionais para URL de acao (`action_url`) e rotulo do botao (`action_label`), permitindo encaminhar o cliente diretamente para qualquer rota.
 
-### 2. Central de Notificações com Alternância de Status
-- **Tabela Dedicada:** Estruturada via `etc/db_schema.xml` (`souenergy_notification`) com índices em `customer_id`, `is_read` e `is_active`.
-- **Status Ativa / Inativa (`is_active`):** A tabela conta com uma coluna de status dinâmico (`✓ Ativa` / `✕ Inativa`). O administrador pode desativar ou reativar qualquer notificação com **1 clique** na coluna de Ações.
-- **Ações e Redirecionamentos Personalizados:** Cada notificação suporta uma URL de ação (`action_url`) e rótulo de botão (`action_label`), permitindo direcionar o cliente diretamente para telas específicas (ex: página de termos, novidades ou avisos).
-- **Sino Interativo no Cabeçalho 🔔:** Integrado ao topo da loja, exibe em tempo real o contador de notificações pendentes ativas.
-- **Filtro de Exibição:** Notificações desativadas pelo administrador são imediatamente ocultadas do sino e da listagem do cliente.
-
-### 3. Gestão dos Termos de Uso (Conformidade LGPD)
-- **Interface Administrativa em Tela Cheia:** A página **Gerenciar Termos de Uso** adota layout centralizado de largura total (100%), com cards responsivos de métricas (*Versão Vigente*, *Total de Usuários*, *Usuários Atualizados*, *Aceites Pendentes*).
-- **Disparo Automático de Notificações:** Ao salvar uma nova versão dos termos no painel, o sistema **dispara instantaneamente uma notificação geral** para toda a base com o link para leitura.
-- **Modal Inteligente no Login:** Se o usuário fizer login e sua versão aceita for inferior à versão vigente, um modal em destaque com *backdrop blur* é apresentado.
-- **Supressão Inteligente:** Caso o administrador desative a notificação dos termos no menu de notificações, **o modal é automaticamente suprimido**, garantindo controle total ao operador do sistema.
-- **Auditoria Visual no Grid de Usuários:** A coluna de termos na listagem de usuários comuns exibe dinamicamente a versão vigente no cabeçalho e classifica os usuários com badges coloridos:
-  - `✓ v2.0 (Atualizado)`: Usuário já aceitou a versão vigente.
-  - `⚠️ Desatualizado (v1.0)`: Usuário com versão legada.
-  - `❌ Não Aceitou`: Usuário pendente de aceite.
+- **Gerenciar Termos de Uso (`/admin/souenergy_notification/terms/manage`):**
+    - Interface em tela cheia centralizada com quatro cards de metricas consolidadas:
+        - _Versao Vigente_: Identificacao da versao ativa no momento.
+        - _Total de Clientes_: Numero total de usuarios cadastrados na base.
+        - _Clientes com a Versao Vigente_: Total de usuarios com aceite confirmado na versao atual.
+        - _Aceites Pendentes_: Quantidade de clientes que necessitam atualizar o consentimento.
+    - Formulario de publicacao de nova versao (campo de versao e campo de texto legal).
+    - Botao de publicacao que grava a nova versao e dispara automaticamente uma notificacao geral para todos os usuarios.
 
 ---
 
-## ⚡ Otimizações de Performance e Ambiente
+### 2. Area do Usuario Comum (Storefront)
 
-Para assegurar inicialização ultra-rápida e consumo mínimo de memória (ideal para desenvolvimento local em máquinas com 8GB a 16GB de RAM), os seguintes módulos não essenciais foram desativados:
+- **Redirecionamento Automatico da Raiz (`/`):**
+    - Visitantes nao autenticados que acessam `http://127.0.0.1:8000/` sao redirecionados para a tela de Login.
+    - Usuarios ja autenticados sao direcionados diretamente para o painel Minha Conta.
 
-| Grupo de Módulos          | Módulos Desativados                                                           | Motivo da Desativação                                                          |
-| :------------------------ | :---------------------------------------------------------------------------- | :----------------------------------------------------------------------------- |
-| **Gateways de Pagamento** | `Magento_Paypal*`, `PayPal_Braintree*`, `Magento_PaymentServices*`            | O escopo do projeto não envolve checkout nem cobrança de cartão.              |
-| **Logística e Fretes**    | `Magento_Fedex`, `Magento_Ups`, `Magento_Dhl`, `Magento_Usps`                 | Sem cálculo ou despacho de fretes físicos.                                     |
-| **Mídia Comercial**       | `Magento_AdobeStock*`                                                         | Integração com banco de imagens pago da Adobe.                                 |
-| **Marketing de Loja**     | `Magento_GoogleAdwords`, `Magento_GoogleAnalytics`, `Magento_GoogleOptimizer` | Rastreamento analítico comercial.                                              |
-| **Segurança 2FA**         | `Magento_TwoFactorAuth`, `Magento_AdminAdobeImsTwoFactorAuth`                 | Permite autenticação ágil no ambiente local sem necessidade de servidor SMTP.  |
+- **Tela de Login (`/customer/account/login/`):**
+    - Card centralizado minimalista com identidade corporativa SouEnergy.
+    - Remocao de elementos desnecessarios de loja (como vitrines, bloco de novos clientes e botoes secundários).
+
+- **Cabecalho da Loja:**
+    - Logotipo oficial SouEnergy no topo esquerdo.
+    - Sino de notificacoes com contador numerico de mensagens pendentes ativas, atualizado em tempo real.
+    - Links limpos para acesso a conta e encerramento de sessao.
+
+- **Painel Minha Conta (`/customer/account/`):**
+    - Interface enxuta focada em dados essenciais de cadastro.
+    - Menu lateral simplificado contendo apenas:
+        - _Dados da Conta_
+        - _Minhas Notificacoes_
+
+- **Central de Notificacoes do Cliente (`/souenergy_notification/customer/index/`):**
+    - Listagem completa das notificacoes destinadas ao usuario ou de carater geral.
+    - Botao para marcar mensagem como lida e botao de acao direta direcionando para a pagina informada no cadastro da notificacao.
+
+- **Pagina de Termos de Uso (`/souenergy/terms/index/`):**
+    - Exibicao integral do texto da versao vigente dos termos de uso.
+    - Botao de confirmacao formal ("Li e Concordo com os Termos"), que grava o aceite e o timestamp auditavel no perfil do usuario.
+
+- **Modal Inteligente de Termos de Uso:**
+    - Janela modal com efeito de desfoque de fundo que aparece automaticamente no momento do login quando a versao aceita pelo usuario e inferior a versao vigente.
+    - Permite direcionar o cliente imediatamente para a leitura e aceite.
+    - **Mecanismo de Supressao:** Se a notificacao vinculada aos termos for desativada no Admin, o modal e automaticamente suprimido no frontend, garantindo controle ao gestor do sistema.
 
 ---
 
-## 🛠️ Comandos Úteis de Manutenção
+## Roteiro de Testes e Validacao Funcional (Casos de Uso)
+
+Siga este roteiro passo a passo para validar todos os fluxos e regras de negocio implementadas no sistema:
+
+### Caso de Teste 1: Redirecionamento da Raiz e Login do Usuario
+
+1. Abra o navegador e acesse a URL raiz: [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+2. **Resultado esperado:** O sistema identifica que nao ha sessao ativa e redireciona automaticamente para [http://127.0.0.1:8000/customer/account/login/](http://127.0.0.1:8000/customer/account/login/).
+3. Informe as credenciais do cliente:
+    - E-mail: `randel@souenergy.com.br`
+    - Senha: `UserPassword123*`
+4. Clique em **Entrar**.
+5. **Resultado esperado:** O usuario e autenticado e direcionado para a tela Minha Conta. O cabecalho exibe o logotipo SouEnergy e o sino de notificacoes.
+
+---
+
+### Caso de Teste 2: Auditoria de Usuarios no Painel Administrativo
+
+1. Em outra janela do navegador (ou guia anonima), acesse o Admin: [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin).
+2. Autentique-se com:
+    - Usuario: `admin`
+    - Senha: `AdminPassword123*`
+3. No menu lateral, clique em **Gerenciar Usuarios**.
+4. Localize o registro de Marcos Randel na listagem.
+5. **Resultado esperado:** A coluna de termos exibe a versao atual cadastrada e a coluna de data/hora registra o momento do aceite.
+
+---
+
+### Caso de Teste 3: Publicacao de Nova Versao dos Termos e Disparo Automatico
+
+1. No menu lateral do Admin, clique em **Gerenciar Termos de Uso**.
+2. Observe os cards de metricas no topo (versao atual, total de clientes e aceites).
+3. No formulario abaixo dos cards, informe uma nova versao (ex: altere de `v1.0` para `v2.0`).
+4. Atualize o texto no campo de conteudo com novas clausulas e clique em **Salvar e Notificar Usuarios**.
+5. **Resultado esperado:** A pagina recarrega com mensagem de sucesso confirmando a atualizacao e os cards passam a exibir a nova versao vigente com contadores recalculados.
+6. Clique no menu lateral em **Gerenciar Notificacoes**.
+7. **Resultado esperado:** Uma nova notificacao geral foi criada de forma automatica pelo sistema, apontando para a URL de termos e com status `✓ Ativa`.
+
+---
+
+### Caso de Teste 4: Exibicao do Modal no Storefront e Confirmacao de Aceite
+
+1. Retorne a aba do usuario comum (`randel@souenergy.com.br`) e atualize a pagina (ou realize logout e login novamente).
+2. **Resultado esperado:**
+    - O **Modal de Atualizacao dos Termos de Uso** e aberto em primeiro plano sobre a tela, informando que os termos foram atualizados.
+    - O sino no cabecalho exibe o badge numerico incrementado com a nova notificacao.
+3. No modal, clique no botao **Ler e Aceitar Novos Termos ->**.
+4. O sistema abrira a pagina [http://127.0.0.1:8000/souenergy/terms/index/](http://127.0.0.1:8000/souenergy/terms/index/) com o texto completo da versao vigente.
+5. Clique no botao **Li e Concordo com os Termos**.
+6. **Resultado esperado:** O aceite e processado, o usuario e redirecionado para Minha Conta com mensagem de sucesso e o modal **nao e mais exibido** ao navegar ou atualizar a pagina.
+
+---
+
+### Caso de Teste 5: Verificacao de Auditoria no Admin Apos Aceite
+
+1. Retorne a aba do Admin e clique novamente em **Gerenciar Usuarios**.
+2. **Resultado esperado:** O badge do cliente Marcos Randel foi atualizado para `✓ v2.0 (Atualizado)` e o campo de data/hora reflete o timestamp do novo consentimento.
+3. Acesse **Gerenciar Termos de Uso**.
+4. **Resultado esperado:** O card _Clientes com a Versao Vigente_ foi incrementado e o card de _Aceites Pendentes_ foi reduzido.
+
+---
+
+### Caso de Teste 6: Desativacao de Notificacao e Supressao Inteligente do Modal
+
+1. No Admin, acesse **Gerenciar Termos de Uso** e publique uma versao experimental (ex: `v3.0`).
+2. Acesse o menu **Gerenciar Notificacoes**.
+3. Localize a notificacao correspondente a versao `v3.0` e, na coluna de Acoes, clique em **Desativar**.
+4. **Resultado esperado:** O status da linha muda imediatamente para `✕ Inativa`.
+5. Volte a aba do usuario comum e recarregue a pagina.
+6. **Resultado esperado:**
+    - A notificacao inativa nao e contabilizada no sino.
+    - O modal de alerta de termos **nao e exibido**, sendo suprimido devido ao status inativo da notificacao no painel.
+7. Retorne ao Admin em **Gerenciar Notificacoes** e clique em **Ativar**.
+8. Ao recarregar a tela do cliente, a notificacao retorna ao sino e o modal volta a ser exibido normalmente.
+
+---
+
+### Caso de Teste 7: Notificacao Manual e Marcacao de Leitura
+
+1. No Admin, acesse **Gerenciar Notificacoes** e clique no botao **Nova Notificacao**.
+2. Preencha os campos:
+    - Titulo: `Aviso de Manutencao Programada`
+    - Mensagem: `Nossos servicos passarao por melhorias no proximo fim de semana.`
+    - Destinatario: Selecione _Geral (Todos os Clientes)_ ou escolha o cliente especifico.
+    - Link de Acao (URL): Opcional (ex: `http://127.0.0.1:8000/`).
+    - Rotulo do Botao: Opcional (ex: `Saiba Mais`).
+3. Clique em **Salvar Notificacao**.
+4. Acesse a tela do usuario comum: o sino de notificacoes exibira o novo contador numerico.
+5. Clique no sino para visualizar ou acesse o menu **Minhas Notificacoes**.
+6. Clique no botao **Marcar como lida**.
+7. **Resultado esperado:** A notificacao e marcada como lida e o contador numerico do sino e reduzido instantaneamente.
+
+---
+
+## Otimizacoes de Performance e Ambiente
+
+Para assegurar inicializacao rapida e consumo minimo de memoria em desenvolvimento local, modulos de e-commerce nao utilizados pelo escopo foram desativados:
+
+| Grupo de Modulos          | Modulos Desativados                                                           | Motivo da Desativacao                                                         |
+| :------------------------ | :---------------------------------------------------------------------------- | :---------------------------------------------------------------------------- |
+| **Gateways de Pagamento** | `Magento_Paypal*`, `PayPal_Braintree*`, `Magento_PaymentServices*`            | O escopo do projeto nao envolve checkout nem cobranca de cartao.              |
+| **Logistica e Fretes**    | `Magento_Fedex`, `Magento_Ups`, `Magento_Dhl`, `Magento_Usps`                 | Sem calculo ou despacho de mercadorias fisicas.                               |
+| **Midia Comercial**       | `Magento_AdobeStock*`                                                         | Integracao com banco de imagens pago da Adobe.                                |
+| **Marketing de Loja**     | `Magento_GoogleAdwords`, `Magento_GoogleAnalytics`, `Magento_GoogleOptimizer` | Rastreamento analitico comercial.                                             |
+| **Seguranca 2FA**         | `Magento_TwoFactorAuth`, `Magento_AdminAdobeImsTwoFactorAuth`                 | Permite autenticacao agil no ambiente local sem necessidade de servidor SMTP. |
+
+---
+
+## Comandos Uteis de Manutencao
 
 Execute estes comandos na pasta `magento_sou_energy`:
 
@@ -361,32 +501,32 @@ Execute estes comandos na pasta `magento_sou_energy`:
 # Limpeza geral de caches do Magento
 php bin/magento cache:flush
 
-# Atualização de esquemas de banco e patches de dados
+# Atualizacao de esquemas de banco e patches de dados
 php -d memory_limit=2G bin/magento setup:upgrade --keep-generated
 
-# Compilação de DI e interceptors
+# Compilacao de DI e interceptors
 php -d memory_limit=2G bin/magento setup:di:compile
 
-# Reindexação manual completa
+# Reindexacao manual completa
 php -d memory_limit=2G bin/magento indexer:reindex
 
-# Reindexação específica do grid de clientes
+# Reindexacao especifica do grid de clientes
 php -d memory_limit=2G bin/magento indexer:reindex customer_grid
 
-# Limpeza de classes geradas do módulo SouEnergy
+# Limpeza de classes geradas do modulo SouEnergy
 rm -rf generated/code/SouEnergy
 ```
 
 ---
 
-## 🌐 APIs REST para Integração com Frontend Desacoplado / Mobile
+## APIs REST para Integracao com Frontend Desacoplado / Mobile
 
-O backend disponibiliza endpoints REST nativos prontos para integração com qualquer aplicação externa desacoplada:
+O backend disponibiliza endpoints REST nativos prontos para integracao com qualquer aplicacao externa desacoplada:
 
-| Endpoint | Método | Autenticação | Descrição |
-| :--- | :---: | :---: | :--- |
-| `/rest/V1/integration/customer/token` | `POST` | Pública | Login do usuário comum e emissão do token JWT/Bearer |
-| `/rest/V1/customers/me` | `GET` | Bearer Token | Retorna o perfil completo e atributos customizados (`terms_version`, `terms_accepted_at`) |
-| `/rest/V1/souenergy/notifications` | `GET` | Bearer Token | Retorna a lista de notificações ativas do usuário |
-| `/rest/V1/souenergy/notifications/unread-count` | `GET` | Bearer Token | Quantidade de notificações não lidas para o sino 🔔 |
-| `/rest/V1/souenergy/notifications/:id/read` | `POST` | Bearer Token | Marca uma notificação individual como lida |
+| Endpoint                                        | Metodo | Autenticacao | Descricao                                                                                 |
+| :---------------------------------------------- | :----: | :----------: | :---------------------------------------------------------------------------------------- |
+| `/rest/V1/integration/customer/token`           | `POST` |   Publica    | Login do usuario comum e emissao do token JWT/Bearer                                      |
+| `/rest/V1/customers/me`                         | `GET`  | Bearer Token | Retorna o perfil completo e atributos customizados (`terms_version`, `terms_accepted_at`) |
+| `/rest/V1/souenergy/notifications`              | `GET`  | Bearer Token | Retorna a lista de notificacoes ativas do usuario                                         |
+| `/rest/V1/souenergy/notifications/unread-count` | `GET`  | Bearer Token | Quantidade de notificacoes nao lidas para o sino                                          |
+| `/rest/V1/souenergy/notifications/:id/read`     | `POST` | Bearer Token | Marca uma notificacao individual como lida                                                |
