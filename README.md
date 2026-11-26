@@ -249,6 +249,26 @@ Voce pode configurar essas credenciais globalmente no arquivo `~/.composer/auth.
     - `--cleanup-database`: Limpa tabelas residuais de tentativas anteriores interrompidas, evitando erros de duplicidade.
     - `--backend-frontname="admin"`: Fixa a rota do painel administrativo em `/admin`.
 
+    > **Solucao de Problema: Erro de Versao do MySQL (RDBMS not supported)**  
+    > Caso a instalacao falhe com o erro:  
+    > `Current version of RDBMS is not supported. Used Version: 26.10.0. Supported versions: MySQL-8, MySQL-5.7, MariaDB-(10.2-10.6)`  
+    >  
+    > Esse comportamento ocorre porque certas distribuicoes do MySQL (como a versao 26.x instalada pelo Homebrew no macOS) utilizam uma numeracao de compilacao que o validador interno do Magento barra por padrao. Para solucionar:  
+    > 1. Abra o arquivo `app/etc/di.xml`.  
+    > 2. Localize a tag `SqlVersionProvider` (por volta da linha 1857):  
+    >    ```xml
+    >    <type name="Magento\Framework\DB\Adapter\SqlVersionProvider">
+    >        <arguments>
+    >            <argument name="supportedVersionPatterns" xsi:type="array">
+    >                <item name="MySQL-8" xsi:type="string">^8\.0\.|^26\.</item>
+    >    ```  
+    > 3. Adicione `|^26\.` no item `MySQL-8`, conforme exibido acima, para autorizar a versao 26.x.  
+    > 4. Remova o arquivo de configuracao gerado pela metade:  
+    >    ```bash
+    >    rm -f app/etc/env.php
+    >    ```  
+    > 5. Execute novamente o comando `setup:install`.
+
 4. **Desativar a Autenticacao de Dois Fatores (2FA) para Desenvolvimento Local:**
 
     ```bash
