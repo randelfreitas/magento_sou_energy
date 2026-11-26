@@ -24,13 +24,6 @@ interface NotificationRepositoryInterface
     public function getById(int $entityId): NotificationInterface;
 
     /**
-     * Get list of notifications for the currently authenticated customer
-     *
-     * @return NotificationInterface[]
-     */
-    public function getMyNotifications(): array;
-
-    /**
      * Mark a notification as read for the currently authenticated customer
      *
      * @param int $entityId

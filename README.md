@@ -1,6 +1,6 @@
 # Magento Sou Energy - Modulo de Autenticacao, Notificacoes e Termos de Uso
 
-Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na implementacao de um sistema modular e desacoplado de autenticacao, area restrita de usuario comum, central de notificacoes e gestao de termos de uso (conformidade LGPD), alem de interface administrativa exclusiva e preparacao completa para consumo por frontend externo desacoplado via APIs REST.
+Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na implementacao de um sistema modular de autenticacao, area restrita de usuario comum, central de notificacoes e gestao de termos de uso.
 
 ---
 
@@ -14,7 +14,7 @@ Ambiente homologado e testado:
 | **Composer**            | `2.x` (ex: `2.11.x`) | Gerenciador de dependencias PHP                                                           |
 | **MySQL**               | `8.0+ / 8.4+ / 26.x` | Banco de dados relacional principal                                                       |
 | **OpenSearch**          | `2.x`                | Mecanismo de busca e indexacao obrigatorio do Magento 2.4+                                |
-| **Magento Open Source** | `2.4.7-p3`           | Plataforma backend, modularidade EAV e exposicao de APIs REST                             |
+| **Magento Open Source** | `2.4.7-p3`           | Plataforma web, modularidade EAV e arquitetura MVC nativa                                 |
 
 ---
 
@@ -132,7 +132,7 @@ O Magento utiliza banco relacional MySQL.
     ```
 
     _(Se voce configurou senha para o root, utilize `mysql -u root -p`)._  
-    Em seguida, crie a base de dados do projeto:
+     Em seguida, crie a base de dados do projeto:
 
     ```sql
     CREATE DATABASE magento_sou_energy CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -514,17 +514,3 @@ php -d memory_limit=2G bin/magento indexer:reindex customer_grid
 # Limpeza de classes geradas do modulo SouEnergy
 rm -rf generated/code/SouEnergy
 ```
-
----
-
-## APIs REST para Integracao com Frontend Desacoplado / Mobile
-
-O backend disponibiliza endpoints REST nativos prontos para integracao com qualquer aplicacao externa desacoplada:
-
-| Endpoint                                        | Metodo | Autenticacao | Descricao                                                                                 |
-| :---------------------------------------------- | :----: | :----------: | :---------------------------------------------------------------------------------------- |
-| `/rest/V1/integration/customer/token`           | `POST` |   Publica    | Login do usuario comum e emissao do token JWT/Bearer                                      |
-| `/rest/V1/customers/me`                         | `GET`  | Bearer Token | Retorna o perfil completo e atributos customizados (`terms_version`, `terms_accepted_at`) |
-| `/rest/V1/souenergy/notifications`              | `GET`  | Bearer Token | Retorna a lista de notificacoes ativas do usuario                                         |
-| `/rest/V1/souenergy/notifications/unread-count` | `GET`  | Bearer Token | Quantidade de notificacoes nao lidas para o sino                                          |
-| `/rest/V1/souenergy/notifications/:id/read`     | `POST` | Bearer Token | Marca uma notificacao individual como lida                                                |

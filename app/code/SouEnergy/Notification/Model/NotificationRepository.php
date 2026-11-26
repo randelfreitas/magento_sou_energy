@@ -55,24 +55,6 @@ class NotificationRepository implements NotificationRepositoryInterface
         return $notification;
     }
 
-    public function getMyNotifications(): array
-    {
-        $customerId = (int)$this->userContext->getUserId();
-
-        $collection = $this->collectionFactory->create();
-        // Target customer OR broadcast (customer_id IS NULL)
-        $collection->addFieldToFilter(
-            [NotificationInterface::CUSTOMER_ID, NotificationInterface::CUSTOMER_ID],
-            [
-                ['eq' => $customerId],
-                ['null' => true]
-            ]
-        );
-        $collection->setOrder(NotificationInterface::CREATED_AT, 'DESC');
-
-        return $collection->getItems();
-    }
-
     public function markAsRead(int $entityId): bool
     {
         $customerId = (int)$this->userContext->getUserId();
