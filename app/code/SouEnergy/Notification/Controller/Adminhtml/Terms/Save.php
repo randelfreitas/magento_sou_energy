@@ -38,7 +38,7 @@ class Save extends Action
         $message = trim((string)$this->getRequest()->getPostValue('message', ''));
 
         if (empty($newVersion)) {
-            $this->messageManager->addErrorMessage(__('Por favor, informe a nova versão dos Termos de Uso.'));
+            $this->messageManager->addErrorMessage(__('Por favor, informe a nova versão da Política de Privacidade.'));
             return $resultRedirect->setPath('*/*/index');
         }
 
@@ -47,9 +47,9 @@ class Save extends Action
             $this->termsConfig->setCurrentVersion($newVersion);
 
             // 2. Cria automaticamente a notificação global para todos os usuários (Ativa por padrão)
-            $notificationTitle = !empty($title) ? $title : sprintf('Atualização dos Termos de Uso (%s)', $newVersion);
+            $notificationTitle = !empty($title) ? $title : sprintf('Atualização da Política de Privacidade (%s)', $newVersion);
             $notificationMessage = !empty($message) ? $message : sprintf(
-                'Publicamos uma nova versão dos Termos de Uso (%s). Por favor, acesse o link para ler e confirmar seu aceite.',
+                'Publicamos uma nova versão da Política de Privacidade (%s). Por favor, acesse o link para ler e confirmar seu aceite.',
                 $newVersion
             );
 
@@ -58,17 +58,17 @@ class Save extends Action
             $notification->setTitle($notificationTitle);
             $notification->setMessage($notificationMessage);
             $notification->setActionUrl('souenergy/terms/index');
-            $notification->setActionLabel('Acessar Novos Termos →');
+            $notification->setActionLabel('Acessar Política de Privacidade →');
             $notification->setIsActive(true);
             $notification->setIsRead(false);
 
             $this->notificationRepository->save($notification);
 
             $this->messageManager->addSuccessMessage(
-                __('Versão vigente dos Termos de Uso atualizada para "%1" com sucesso! Notificação enviada para todos os usuários comuns.', $newVersion)
+                __('Versão vigente da Política de Privacidade atualizada para "%1" com sucesso! Notificação enviada para todos os usuários comuns.', $newVersion)
             );
         } catch (Exception $e) {
-            $this->messageManager->addErrorMessage(__('Erro ao atualizar termos: %1', $e->getMessage()));
+            $this->messageManager->addErrorMessage(__('Erro ao atualizar a Política de Privacidade: %1', $e->getMessage()));
         }
 
         return $resultRedirect->setPath('*/*/index');

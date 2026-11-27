@@ -38,7 +38,7 @@ class AddCustomerTermsAttributes implements DataPatchInterface
 
         $customerSetup->addAttribute(Customer::ENTITY, 'terms_version', [
             'type' => 'varchar',
-            'label' => 'Versão Termos Aceitos',
+            'label' => 'Versão Política Aceita',
             'input' => 'text',
             'required' => false,
             'visible' => true,
@@ -54,7 +54,7 @@ class AddCustomerTermsAttributes implements DataPatchInterface
 
         $customerSetup->addAttribute(Customer::ENTITY, 'terms_accepted_at', [
             'type' => 'datetime',
-            'label' => 'Data Aceite Termos',
+            'label' => 'Data Aceite Política',
             'input' => 'date',
             'required' => false,
             'visible' => true,

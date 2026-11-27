@@ -1,6 +1,6 @@
-# Magento Sou Energy - Módulo de Autenticação, Notificações e Termos de Uso
+# Magento Sou Energy - Módulo de Autenticação, Notificações e Política de Privacidade
 
-Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na implementação de um sistema modular de autenticação, área restrita de usuário comum, central de notificações e gestão de termos de uso, com interface administrativa exclusiva e navegação nativa.
+Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na implementação de um sistema modular de autenticação, área restrita de usuário comum, central de notificações e gestão de política de privacidade, com interface administrativa exclusiva e navegação nativa.
 
 ---
 
@@ -345,8 +345,8 @@ Você pode configurar essas credenciais globalmente no arquivo `~/.composer/auth
 O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 
 - **Gerenciar Usuários (`/admin/souenergy_notification/customer/index`):**
-    - Grid de clientes com colunas dedicadas para auditoria de termos.
-    - O cabeçalho da coluna de termos indica a versão vigente do sistema (ex: `Termos de Uso (Vigente: v2.0)`).
+    - Grid de clientes com colunas dedicadas para auditoria da política de privacidade.
+    - O cabeçalho da coluna de política de privacidade indica a versão vigente do sistema (ex: `Política de Privacidade (Vigente: v2.0)`).
     - Cada registro exibe badges de conformidade:
         - `✓ v2.0 (Atualizado)`: Usuário já aceitou a versão vigente.
         - `⚠️ Desatualizado (v1.0)`: Usuário com versão anterior.
@@ -362,7 +362,7 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
     - Formulário administrativo com seleção de tipo de destinatário (Todos os clientes ou cliente específico via autocomplete/ID).
     - Campos opcionais para URL de ação (`action_url`) e rótulo do botão (`action_label`), permitindo encaminhar o cliente diretamente para qualquer rota.
 
-- **Gerenciar Termos de Uso (`/admin/souenergy_notification/terms/manage`):**
+- **Gerenciar Política de Privacidade (`/admin/souenergy_notification/terms/manage`):**
     - Interface em tela cheia centralizada com quatro cards de métricas consolidadas:
         - _Versão Vigente_: Identificação da versão ativa no momento.
         - _Total de Clientes_: Número total de usuários cadastrados na base.
@@ -398,14 +398,13 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
     - Listagem completa das notificações destinadas ao usuário ou de caráter geral.
     - Botão para marcar mensagem como lida e botão de ação direta direcionando para a página informada no cadastro da notificação.
 
-- **Página de Termos de Uso (`/souenergy/terms/index/`):**
-    - Exibição integral do texto da versão vigente dos termos de uso.
-    - Botão de confirmação formal ("Li e Concordo com os Termos"), que grava o aceite e o timestamp auditável no perfil do usuário.
+- **Página de Política de Privacidade (`/souenergy/terms/index/`):**
+    - Exibição integral do texto da versão vigente da política de privacidade.
+    - Botão de confirmação formal ("Li e Aceito a Versão ..."), que grava o aceite e o timestamp auditável no perfil do usuário.
 
-- **Modal Inteligente de Termos de Uso:**
+- **Modal de Política de Privacidade:**
     - Janela modal com efeito de desfoque de fundo que aparece automaticamente no momento do login quando a versão aceita pelo usuário é inferior à versão vigente.
-    - Permite direcionar o cliente imediatamente para a leitura e aceite.
-    - **Mecanismo de Supressão:** Se a notificação vinculada aos termos for desativada no Admin, o modal é automaticamente suprimido no frontend, garantindo controle ao gestor do sistema.
+    - Permite direcionar o cliente imediatamente para a leitura e aceite, funcionando de forma independente do status (ativo/inativo) das notificações.
 
 ---
 
@@ -419,7 +418,7 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
     - E-mail: `randel@souenergy.com.br`
     - Senha: `UserPassword123*`
 4. Clique em **Entrar**.
-5. **Resultado esperado:** O usuário é autenticado e direcionado para a tela Minha Conta. O cabeçalho exibe o logotipo SouEnergy, o sino de notificações e surge automaticamente em destaque na tela o modal de aceite dos termos de uso (caso o usuário ainda não tenha registrado o aceite da versão vigente).
+5. **Resultado esperado:** O usuário é autenticado e direcionado para a tela Minha Conta. O cabeçalho exibe o logotipo SouEnergy, o sino de notificações e surge automaticamente em destaque na tela o modal de aceite da política de privacidade (caso o usuário ainda não tenha registrado o aceite da versão vigente).
 
 ---
 
@@ -431,19 +430,19 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
     - Senha: `AdminPassword123*`
 3. No menu lateral, clique em **Gerenciar Usuários**.
 4. Localize o registro de Marcos Randel na listagem.
-5. **Resultado esperado:** A coluna de termos exibe a versão atual cadastrada e a coluna de data/hora registra o momento do aceite.
+5. **Resultado esperado:** A coluna de política de privacidade exibe a versão atual cadastrada e a coluna de data/hora registra o momento do aceite.
 
 ---
 
-### Caso de Teste 3: Publicação de Nova Versão dos Termos e Disparo Automático
+### Caso de Teste 3: Publicação de Nova Versão da Política de Privacidade e Disparo Automático
 
-1. No menu lateral do Admin, clique em **Gerenciar Termos de Uso**.
+1. No menu lateral do Admin, clique em **Gerenciar Política de Privacidade**.
 2. Observe os cards de métricas no topo (versão atual, total de clientes e aceites).
 3. No formulário abaixo dos cards, informe uma nova versão (ex: altere de `v1.0` para `v2.0`).
-4. Atualize o texto no campo de conteúdo com novas cláusulas e clique em **Salvar e Notificar Usuários**.
+4. Atualize o texto no campo de conteúdo com novas cláusulas e clique em **Salvar Nova Versão e Notificar Usuários**.
 5. **Resultado esperado:** A página recarrega com mensagem de sucesso confirmando a atualização e os cards passam a exibir a nova versão vigente com contadores recalculados.
 6. Clique no menu lateral em **Gerenciar Notificações**.
-7. **Resultado esperado:** Uma nova notificação geral foi criada de forma automática pelo sistema, apontando para a URL de termos e com status `✓ Ativa`.
+7. **Resultado esperado:** Uma nova notificação geral foi criada de forma automática pelo sistema, apontando para a URL da política de privacidade e com status `✓ Ativa`.
 
 ---
 
@@ -451,11 +450,11 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 
 1. Retorne à aba do usuário comum (`randel@souenergy.com.br`) e atualize a página (ou realize logout e login novamente).
 2. **Resultado esperado:**
-    - O **Modal de Atualização dos Termos de Uso** é aberto em primeiro plano sobre a tela, informando que os termos foram atualizados.
+    - O **Modal de Atualização da Política de Privacidade** é aberto em primeiro plano sobre a tela, informando que a política de privacidade foi atualizada.
     - O sino no cabeçalho exibe o badge numérico incrementado com a nova notificação.
-3. No modal, clique no botão **Ler e Aceitar Novos Termos ->**.
+3. No modal, clique no botão **Ler e Aceitar Política de Privacidade ->**.
 4. O sistema abrirá a página [http://127.0.0.1:8000/souenergy/terms/index/](http://127.0.0.1:8000/souenergy/terms/index/) com o texto completo da versão vigente.
-5. Clique no botão **Li e Concordo com os Termos**.
+5. Clique no botão **Li e Aceito a Versão ...**.
 6. **Resultado esperado:** O aceite é processado, o usuário é redirecionado para Minha Conta com mensagem de sucesso e o modal **não é mais exibido** ao navegar ou atualizar a página.
 
 ---
@@ -464,23 +463,23 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 
 1. Retorne à aba do Admin e clique novamente em **Gerenciar Usuários**.
 2. **Resultado esperado:** O badge do cliente Marcos Randel foi atualizado para `✓ v2.0 (Atualizado)` e o campo de data/hora reflete o timestamp do novo consentimento.
-3. Acesse **Gerenciar Termos de Uso**.
+3. Acesse **Gerenciar Política de Privacidade**.
 4. **Resultado esperado:** O card _Clientes com a Versão Vigente_ foi incrementado e o card de _Aceites Pendentes_ foi reduzido.
 
 ---
 
-### Caso de Teste 6: Desativação de Notificação e Supressão Inteligente do Modal
+### Caso de Teste 6: Ativação e Desativação de Notificação (Independente do Modal)
 
-1. No Admin, acesse **Gerenciar Termos de Uso** e publique uma versão experimental (ex: `v3.0`).
+1. No Admin, acesse **Gerenciar Política de Privacidade** e publique uma versão experimental (ex: `v3.0`).
 2. Acesse o menu **Gerenciar Notificações**.
 3. Localize a notificação correspondente à versão `v3.0` e, na coluna de Ações, clique em **Desativar**.
 4. **Resultado esperado:** O status da linha muda imediatamente para `✕ Inativa`.
 5. Volte à aba do usuário comum e recarregue a página.
 6. **Resultado esperado:**
-    - A notificação inativa não é contabilizada no sino.
-    - O modal de alerta de termos **não é exibido**, sendo suprimido devido ao status inativo da notificação no painel.
+    - A notificação inativa deixa de aparecer no sino e em **Minhas Notificações**.
+    - O modal de aceite da política de privacidade **continua sendo exibido** normalmente, pois o cliente ainda não aceitou a versão vigente `v3.0`.
 7. Retorne ao Admin em **Gerenciar Notificações** e clique em **Ativar**.
-8. Ao recarregar a tela do cliente, a notificação retorna ao sino e o modal volta a ser exibido normalmente.
+8. Ao recarregar a tela do cliente, a notificação volta a aparecer no sino e em **Minhas Notificações**.
 
 ---
 

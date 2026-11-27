@@ -26,7 +26,7 @@ class Index extends Action
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->set(__('Termos de Uso e Política de Privacidade'));
+        $resultPage->getConfig()->getTitle()->set(__('Política de Privacidade'));
         return $resultPage;
     }
 }

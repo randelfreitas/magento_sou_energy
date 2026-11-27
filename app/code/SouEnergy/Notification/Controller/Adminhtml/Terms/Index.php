@@ -23,7 +23,7 @@ class Index extends Action
     {
         $resultPage = $this->resultPageFactory->create();
         $resultPage->setActiveMenu('SouEnergy_Notification::terms');
-        $resultPage->getConfig()->getTitle()->prepend(__('Gerenciar Termos de Uso'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Gerenciar Política de Privacidade'));
         return $resultPage;
     }
 }

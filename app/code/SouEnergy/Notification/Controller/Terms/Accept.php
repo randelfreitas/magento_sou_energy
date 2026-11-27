@@ -43,7 +43,7 @@ class Accept extends Action
         $resultRedirect = $this->resultRedirectFactory->create();
 
         if (!$this->customerSession->isLoggedIn()) {
-            $this->messageManager->addErrorMessage(__('Faça login para aceitar os termos de uso.'));
+            $this->messageManager->addErrorMessage(__('Faça login para aceitar a Política de Privacidade.'));
             return $resultRedirect->setPath('customer/account/login');
         }
 
@@ -57,7 +57,7 @@ class Accept extends Action
             $customer->setCustomAttribute('terms_accepted_at', (new DateTime())->format('Y-m-d H:i:s'));
             $this->customerRepository->save($customer);
 
-            // 2. Marca notificações pendentes de termos como lidas
+            // 2. Marca notificações pendentes da Política de Privacidade como lidas
             $collection = $this->collectionFactory->create();
             $collection->addFieldToFilter(
                 [NotificationInterface::CUSTOMER_ID, NotificationInterface::CUSTOMER_ID, NotificationInterface::CUSTOMER_ID],
@@ -68,20 +68,18 @@ class Accept extends Action
                 ]
             );
             $collection->addFieldToFilter(NotificationInterface::IS_READ, 0);
+            $collection->addFieldToFilter(NotificationInterface::ACTION_URL, 'souenergy/terms/index');
 
             foreach ($collection as $notification) {
-                $url = (string)$notification->getActionUrl();
-                if (stripos($url, 'terms') !== false || stripos($notification->getTitle(), 'termo') !== false) {
-                    $notification->setIsRead(true);
-                    $this->notificationRepository->save($notification);
-                }
+                $notification->setIsRead(true);
+                $this->notificationRepository->save($notification);
             }
 
             $this->messageManager->addSuccessMessage(
-                __('Você leu e aceitou os novos Termos de Uso (%1) com sucesso!', $currentVersion)
+                __('Você leu e aceitou a nova Política de Privacidade (%1) com sucesso!', $currentVersion)
             );
         } catch (Exception $e) {
-            $this->messageManager->addErrorMessage(__('Ocorreu um erro ao registrar o aceite dos termos: %1', $e->getMessage()));
+            $this->messageManager->addErrorMessage(__('Ocorreu um erro ao registrar o aceite da Política de Privacidade: %1', $e->getMessage()));
         }
 
         return $resultRedirect->setPath('souenergy/notification/index');

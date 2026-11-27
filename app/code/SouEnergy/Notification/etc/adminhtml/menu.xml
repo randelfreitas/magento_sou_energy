@@ -17,9 +17,9 @@
              action="souenergy_notification/notification/index"
              resource="SouEnergy_Notification::notifications"/>
 
-        <!-- 3. Menu Direto: Gerenciar Termos de Uso -->
+        <!-- 3. Menu Direto: Gerenciar Política de Privacidade -->
         <add id="SouEnergy_Notification::terms"
-             title="Gerenciar Termos de Uso"
+             title="Gerenciar Política de Privacidade"
              module="SouEnergy_Notification"
              sortOrder="30"
              action="souenergy_notification/terms/index"

@@ -28,7 +28,7 @@ class TermsStatus extends Column
         parent::prepare();
         $currentVersion = $this->termsConfig->getCurrentVersion();
         $config = $this->getData('config') ?: [];
-        $config['label'] = sprintf('Termos de Uso (Vigente: %s)', $currentVersion);
+        $config['label'] = sprintf('Política de Privacidade (Vigente: %s)', $currentVersion);
         $this->setData('config', $config);
     }
 

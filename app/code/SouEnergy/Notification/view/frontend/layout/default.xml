@@ -24,7 +24,7 @@
         <referenceBlock name="report.bugs" remove="true"/>
         <referenceBlock name="store_switcher" remove="true"/>
 
-        <!-- Modal de Atualização dos Termos -->
+        <!-- Modal de Atualização da Política de Privacidade -->
         <referenceContainer name="before.body.end">
             <block class="SouEnergy\Notification\Block\Customer\TermsModal"
                    name="souenergy_customer_terms_modal"

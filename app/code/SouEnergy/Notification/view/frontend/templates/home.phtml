@@ -12,7 +12,7 @@ $accountUrl = $block->getUrl('customer/account');
         Bem-vindo à Sou Energy
     </h1>
     <p style="font-size: 18px; color: #64748b; margin-bottom: 35px; line-height: 1.6;">
-        Acesse sua conta para visualizar notificações de sistema, atualizações de termos de uso e gerenciar suas preferências.
+        Acesse sua conta para visualizar notificações de sistema, atualizações da Política de Privacidade e gerenciar suas preferências.
     </p>
     <div style="display: flex; gap: 15px; justify-content: center;">
         <a href="<?= $block->escapeUrl($loginUrl) ?>" 
@@ -21,7 +21,7 @@ $accountUrl = $block->getUrl('customer/account');
         </a>
         <a href="<?= $block->escapeUrl($block->getUrl('souenergy/terms/index')) ?>" 
            style="background: #f1f5f9; color: #475569; text-decoration: none; padding: 14px 28px; border-radius: 8px; font-weight: 600; font-size: 16px; transition: all 0.2s ease;">
-            Termos de Uso
+            Política de Privacidade
         </a>
     </div>
 </div>
