@@ -29,6 +29,11 @@ class Manage extends Template
         return $this->termsConfig->getCurrentVersion();
     }
 
+    public function getCurrentContent(): string
+    {
+        return $this->termsConfig->getCurrentContent();
+    }
+
     public function getSaveUrl(): string
     {
         return $this->getUrl('*/*/save');

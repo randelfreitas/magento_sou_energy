@@ -34,6 +34,7 @@ class Save extends Action
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         $newVersion = trim((string)$this->getRequest()->getPostValue('version', ''));
+        $content = trim((string)$this->getRequest()->getPostValue('content', ''));
         $title = trim((string)$this->getRequest()->getPostValue('title', ''));
         $message = trim((string)$this->getRequest()->getPostValue('message', ''));
 
@@ -42,11 +43,17 @@ class Save extends Action
             return $resultRedirect->setPath('*/*/index');
         }
 
-        try {
-            // 1. Atualiza a versão vigente nas configurações do sistema
-            $this->termsConfig->setCurrentVersion($newVersion);
+        if (empty($content)) {
+            $this->messageManager->addErrorMessage(__('Por favor, informe o texto da Política de Privacidade.'));
+            return $resultRedirect->setPath('*/*/index');
+        }
 
-            // 2. Cria automaticamente a notificação global para todos os usuários (Ativa por padrão)
+        try {
+            // Atualiza a versão vigente e o conteúdo nas configurações do sistema
+            $this->termsConfig->setCurrentVersion($newVersion);
+            $this->termsConfig->setCurrentContent($content);
+
+            // Cria automaticamente a notificação global para todos os usuários (Ativa por padrão)
             $notificationTitle = !empty($title) ? $title : sprintf('Atualização da Política de Privacidade (%s)', $newVersion);
             $notificationMessage = !empty($message) ? $message : sprintf(
                 'Publicamos uma nova versão da Política de Privacidade (%s). Por favor, acesse o link para ler e confirmar seu aceite.',
@@ -54,7 +61,7 @@ class Save extends Action
             );
 
             $notification = $this->notificationFactory->create();
-            $notification->setCustomerId(null); // Broadcast para todos
+            $notification->setCustomerId(null);
             $notification->setTitle($notificationTitle);
             $notification->setMessage($notificationMessage);
             $notification->setActionUrl('souenergy/terms/index');

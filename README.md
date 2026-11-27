@@ -139,7 +139,7 @@ O Magento utiliza banco relacional MySQL.
     ```
 
     _(Se você configurou senha para o root, utilize `mysql -u root -p`)._  
-    Em seguida, crie a base de dados do projeto:
+     Em seguida, crie a base de dados do projeto:
 
     ```sql
     CREATE DATABASE magento_sou_energy CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

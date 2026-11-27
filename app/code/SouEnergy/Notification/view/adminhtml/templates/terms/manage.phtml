@@ -56,6 +56,16 @@ $pendingCustomers = max(0, $totalCustomers - $updatedCustomers);
             </div>
 
             <div style="margin-bottom: 24px;">
+                <label for="content" style="display: block; font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 8px;">
+                    Texto da Política de Privacidade <span style="color: #ef4444;">*</span>
+                </label>
+                <textarea id="content" name="content" rows="12" required
+                          placeholder="Insira o texto completo da Política de Privacidade que será exibido aos usuários"
+                          style="width: 100%; max-width: 700px; padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; line-height: 1.6;"><?= $block->escapeHtml($block->getCurrentContent()) ?></textarea>
+                <div style="font-size: 12px; color: #64748b; margin-top: 6px;">Este texto será exibido integralmente na página de Política de Privacidade para os usuários.</div>
+            </div>
+
+            <div style="margin-bottom: 24px;">
                 <label for="title" style="display: block; font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 8px;">
                     Título da Notificação Automática
                 </label>

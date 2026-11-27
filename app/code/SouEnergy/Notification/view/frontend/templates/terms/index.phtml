@@ -4,6 +4,7 @@ $acceptUrl = $block->getUrl('souenergy/terms/accept');
 $customerSession = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Customer\Model\Session::class);
 $termsConfig = \Magento\Framework\App\ObjectManager::getInstance()->get(\SouEnergy\Notification\Model\TermsConfig::class);
 $currentSystemVersion = $termsConfig->getCurrentVersion();
+$currentTermsContent = $termsConfig->getCurrentContent();
 
 $isLoggedIn = $customerSession->isLoggedIn();
 $userTermsVersion = null;
@@ -17,9 +18,7 @@ if ($isLoggedIn) {
         $termsAcceptedAtAttr = $customerData->getCustomAttribute('terms_accepted_at');
         $userTermsVersion = $termsVersionAttr ? $termsVersionAttr->getValue() : null;
         $userTermsAcceptedAt = $termsAcceptedAtAttr ? $termsAcceptedAtAttr->getValue() : null;
-    } catch (\Exception $e) {
-        // Fallback
-    }
+    } catch (\Exception $e) { }
 }
 
 $isUpdated = ($isLoggedIn && $userTermsVersion === $currentSystemVersion);
@@ -42,24 +41,8 @@ $isUpdated = ($isLoggedIn && $userTermsVersion === $currentSystemVersion);
         <?php endif; ?>
     </div>
 
-    <div class="terms-content" style="color: #334155; line-height: 1.7; font-size: 15px; margin-bottom: 35px; max-height: 380px; overflow-y: auto; padding-right: 15px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; background: #f8fafc;">
-        <h3 style="color: #0f172a; font-size: 16px; font-weight: 700; margin-top: 0;">1. Consentimento e Aceitação</h3>
-        <p>Ao utilizar os serviços e plataformas da Sou Energy, o usuário declara ter lido, compreendido e aceito integralmente a presente Política de Privacidade (versão <?= $block->escapeHtml($currentSystemVersion) ?>), concordando com a coleta e o tratamento dos seus dados pessoais conforme aqui descrito.</p>
-
-        <h3 style="color: #0f172a; font-size: 16px; font-weight: 700; margin-top: 20px;">2. Coleta e Uso de Dados Pessoais</h3>
-        <p>A Sou Energy coleta dados pessoais estritamente necessários para o fornecimento dos serviços contratados, incluindo nome, e-mail, CPF/CNPJ e informações de acesso. Esses dados são utilizados para identificação do usuário, comunicações operacionais e cumprimento de obrigações legais.</p>
-
-        <h3 style="color: #0f172a; font-size: 16px; font-weight: 700; margin-top: 20px;">3. Proteção de Dados e LGPD</h3>
-        <p>Os dados pessoais coletados são tratados de forma confidencial e exclusivamente para o fornecimento dos serviços, cumprimento de obrigações legais e segurança da conta, em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</p>
-
-        <h3 style="color: #0f172a; font-size: 16px; font-weight: 700; margin-top: 20px;">4. Compartilhamento de Dados</h3>
-        <p>A Sou Energy não compartilha dados pessoais com terceiros, exceto quando necessário para cumprimento de obrigações legais, por determinação judicial ou para prestadores de serviços essenciais à operação da plataforma, sempre sob obrigação contratual de sigilo.</p>
-
-        <h3 style="color: #0f172a; font-size: 16px; font-weight: 700; margin-top: 20px;">5. Direitos do Titular</h3>
-        <p>O usuário poderá, a qualquer momento, solicitar acesso, correção, exclusão ou portabilidade dos seus dados pessoais, bem como revogar o consentimento concedido, através dos canais oficiais de atendimento da Sou Energy.</p>
-
-        <h3 style="color: #0f172a; font-size: 16px; font-weight: 700; margin-top: 20px;">6. Atualizações da Política</h3>
-        <p>A Sou Energy reserva-se o direito de atualizar esta Política de Privacidade a qualquer momento, notificando os usuários ativos para nova confirmação de aceite.</p>
+    <div class="terms-content" style="color: #334155; line-height: 1.7; font-size: 15px; margin-bottom: 35px; max-height: 380px; overflow-y: auto; padding-right: 15px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; background: #f8fafc; word-wrap: break-word;">
+        <?= nl2br($block->escapeHtml($currentTermsContent)) ?>
     </div>
 
     <?php if ($isUpdated): ?>
