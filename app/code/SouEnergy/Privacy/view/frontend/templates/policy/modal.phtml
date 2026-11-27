@@ -1,0 +1,54 @@
+<?php
+/** @var \SouEnergy\Privacy\Block\Policy\Modal $block */
+if (!$block->shouldShowModal()) {
+    return;
+}
+
+$currentVersion = $block->getCurrentVersion();
+$userVersion = $block->getUserVersion();
+$policyUrl = $block->getPolicyUrl();
+?>
+<div id="souenergy-privacy-modal-overlay" class="souenergy-modal-overlay">
+    <div id="souenergy-privacy-modal-card" class="souenergy-modal-card">
+        <button type="button"
+                onclick="closeSouEnergyPrivacyModal()"
+                class="souenergy-modal-close"
+                aria-label="Fechar"
+                title="Fechar">
+            &times;
+        </button>
+
+        <div class="souenergy-modal-body">
+            <h3 class="souenergy-modal-title">Nova Política de Privacidade Disponível</h3>
+
+            <p class="souenergy-modal-text">
+                Publicamos uma nova versão da <strong>Política de Privacidade</strong> da Sou Energy.
+                Para garantir a conformidade legal (LGPD) e continuar utilizando a plataforma com segurança,
+                solicitamos que leia as novas diretrizes e confirme seu aceite.
+            </p>
+
+            <?php if ($userVersion): ?>
+                <div class="souenergy-modal-versions">
+                    <span>Sua versão anterior: <strong><?= $block->escapeHtml($userVersion) ?></strong></span>
+                    <span class="souenergy-modal-versions__new">Nova versão: <?= $block->escapeHtml($currentVersion) ?></span>
+                </div>
+            <?php endif; ?>
+
+            <a href="<?= $block->escapeUrl($policyUrl) ?>" class="souenergy-modal-cta">
+                Ler e Aceitar Política de Privacidade
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+function closeSouEnergyPrivacyModal() {
+    var modal = document.getElementById('souenergy-privacy-modal-overlay');
+    if (modal) {
+        modal.style.opacity = '0';
+        setTimeout(function () {
+            modal.style.display = 'none';
+        }, 200);
+    }
+}
+</script>

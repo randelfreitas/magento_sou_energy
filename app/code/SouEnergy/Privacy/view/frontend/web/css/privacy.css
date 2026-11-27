@@ -1,0 +1,257 @@
+.souenergy-policy-container {
+    max-width: 860px;
+    margin: 30px auto;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.souenergy-policy-header {
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.souenergy-policy-kicker {
+    color: #f57c00;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.souenergy-policy-title {
+    color: #1e293b;
+    font-size: 28px;
+    font-weight: 800;
+    margin: 8px 0;
+}
+
+.souenergy-policy-meta {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+}
+
+.souenergy-policy-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.souenergy-policy-badge--ok {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #047857;
+}
+
+.souenergy-policy-badge--warn {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #b45309;
+}
+
+.souenergy-policy-content {
+    color: #334155;
+    line-height: 1.7;
+    font-size: 15px;
+    margin-bottom: 35px;
+    max-height: 380px;
+    overflow-y: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    background: #f8fafc;
+    word-wrap: break-word;
+}
+
+.souenergy-policy-banner {
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.souenergy-policy-banner h4 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.souenergy-policy-banner p {
+    margin: 0;
+    font-size: 13px;
+}
+
+.souenergy-policy-banner--ok {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+}
+
+.souenergy-policy-banner--ok h4 {
+    color: #15803d;
+}
+
+.souenergy-policy-banner--ok p {
+    color: #166534;
+}
+
+.souenergy-policy-banner--pending {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+}
+
+.souenergy-policy-banner--pending h4 {
+    color: #92400e;
+}
+
+.souenergy-policy-banner--pending p {
+    color: #b45309;
+}
+
+.souenergy-policy-form {
+    margin: 0;
+}
+
+.souenergy-policy-btn {
+    color: #ffffff !important;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+    transition: opacity 0.2s ease;
+}
+
+.souenergy-policy-btn--ok {
+    background: #15803d;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.souenergy-policy-btn--accept {
+    background: #16a34a;
+    padding: 12px 28px;
+    font-size: 15px;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.souenergy-policy-btn--login {
+    background: #f57c00;
+    padding: 12px 24px;
+    font-size: 14px;
+}
+
+.souenergy-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: opacity 0.2s ease;
+    animation: souenergyFadeIn 0.25s ease-out;
+}
+
+.souenergy-modal-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    position: relative;
+    animation: souenergySlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.souenergy-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 4px 10px;
+    line-height: 1;
+}
+
+.souenergy-modal-body {
+    padding: 32px;
+}
+
+.souenergy-modal-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 16px 0;
+    line-height: 1.3;
+}
+
+.souenergy-modal-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0 0 24px 0;
+}
+
+.souenergy-modal-versions {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.souenergy-modal-versions__new {
+    color: #ea580c;
+    font-weight: 600;
+}
+
+.souenergy-modal-cta {
+    background: #f57c00;
+    color: #ffffff !important;
+    text-decoration: none;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 20px;
+    border-radius: 10px;
+    display: block;
+    box-shadow: 0 4px 14px rgba(245, 124, 0, 0.35);
+    transition: background 0.2s ease;
+}
+
+@keyframes souenergyFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes souenergySlideUp {
+    from { transform: translateY(20px) scale(0.96); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}

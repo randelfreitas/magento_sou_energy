@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="SouEnergy_Portal::customers"
+             title="Gerenciar Usuários"
+             module="SouEnergy_Portal"
+             sortOrder="10"
+             action="souenergy_portal/customer/index"
+             resource="Magento_Customer::customer"/>
+
+        <remove id="Magento_Backend::dashboard"/>
+        <remove id="Magento_Sales::sales"/>
+        <remove id="Magento_Catalog::catalog"/>
+        <remove id="Magento_Customer::customer"/>
+        <remove id="Magento_Backend::marketing"/>
+        <remove id="Magento_Backend::content"/>
+        <remove id="Magento_Reports::report"/>
+        <remove id="Magento_Backend::stores"/>
+        <remove id="Magento_Backend::system"/>
+        <remove id="Magento_Marketplace::partners"/>
+    </menu>
+</config>

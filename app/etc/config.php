@@ -361,6 +361,8 @@ return [
         'PayPal_BraintreeGiftWrapping' => 0,
         'PayPal_BraintreeGraphQl' => 0,
         'PayPal_BraintreeReward' => 0,
-        'SouEnergy_Notification' => 1
+        'SouEnergy_Portal' => 1,
+        'SouEnergy_Notification' => 1,
+        'SouEnergy_Privacy' => 1
     ]
 ];

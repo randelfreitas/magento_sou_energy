@@ -53,6 +53,6 @@ class NotificationBell extends Template
 
     public function getNotificationsUrl(): string
     {
-        return $this->getUrl('souenergy/notification/index');
+        return $this->getUrl('notificacoes/index/index');
     }
 }

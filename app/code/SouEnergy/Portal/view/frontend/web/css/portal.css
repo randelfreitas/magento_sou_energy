@@ -1,0 +1,176 @@
+.souenergy-logo {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.souenergy-logo__text {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    color: #0f172a;
+}
+
+.souenergy-logo__accent {
+    color: #f57c00;
+}
+
+.souenergy-info-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    background: #ffffff;
+    max-width: 500px;
+}
+
+.souenergy-info-card__title {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #1e293b;
+}
+
+.souenergy-info-card__content {
+    color: #475569;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.souenergy-info-card__content p {
+    margin: 0;
+}
+
+.souenergy-info-card__actions {
+    display: flex;
+    gap: 14px;
+}
+
+.souenergy-info-card__edit {
+    color: #f57c00;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.souenergy-info-card__sep {
+    color: #cbd5e1;
+}
+
+.souenergy-info-card__password {
+    color: #64748b;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.login-container {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+.login-container .block-customer-login {
+    width: 100% !important;
+    max-width: 480px !important;
+    float: none !important;
+    margin: 0 auto !important;
+}
+
+.souenergy-login-wrapper {
+    max-width: 440px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 36px 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+}
+
+.souenergy-login-header {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.souenergy-login-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+}
+
+.souenergy-login-subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.souenergy-login-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.souenergy-login-field {
+    margin-bottom: 18px;
+}
+
+.souenergy-login-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 6px;
+}
+
+.souenergy-required {
+    color: #ef4444;
+}
+
+.souenergy-login-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.souenergy-login-choice {
+    margin-bottom: 24px;
+}
+
+.souenergy-login-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 10px;
+}
+
+.souenergy-login-submit {
+    background: #f57c00 !important;
+    color: #ffffff !important;
+    border: none !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    padding: 13px 20px !important;
+    border-radius: 8px !important;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245, 124, 0, 0.3);
+    transition: background 0.2s;
+}
+
+.souenergy-login-remind {
+    text-align: center;
+    margin-top: 6px;
+}
+
+.souenergy-login-remind a {
+    font-size: 13px;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 500;
+}

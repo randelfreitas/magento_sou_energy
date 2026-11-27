@@ -1,0 +1,30 @@
+<?php
+/** @var \Magento\Customer\Block\Account\Dashboard\Info $block */
+?>
+<div class="block block-dashboard-info">
+    <div class="block-title"><strong><?= $block->escapeHtml(__('Informações da Conta')) ?></strong></div>
+    <div class="block-content">
+        <div class="box box-information souenergy-info-card">
+            <strong class="box-title souenergy-info-card__title">
+                <span><?= $block->escapeHtml(__('Dados de Contato')) ?></span>
+            </strong>
+            <div class="box-content souenergy-info-card__content">
+                <p>
+                    <strong><?= $block->escapeHtml($block->getName()) ?></strong><br>
+                    <?= $block->escapeHtml($block->getCustomer()->getEmail()) ?>
+                </p>
+                <?= $block->getChildHtml('customer.account.dashboard.info.extra') ?>
+            </div>
+            <div class="box-actions souenergy-info-card__actions">
+                <a class="action edit souenergy-info-card__edit" href="<?= $block->escapeUrl($block->getUrl('customer/account/edit')) ?>">
+                    <span><?= $block->escapeHtml(__('Editar')) ?></span>
+                </a>
+                <span class="souenergy-info-card__sep">|</span>
+                <a class="action change-password souenergy-info-card__password" href="<?= $block->escapeUrl($block->getChangePasswordUrl()) ?>">
+                    <?= $block->escapeHtml(__('Alterar Senha')) ?>
+                </a>
+            </div>
+        </div>
+        <?= $block->getChildHtml('additional_blocks') ?>
+    </div>
+</div>

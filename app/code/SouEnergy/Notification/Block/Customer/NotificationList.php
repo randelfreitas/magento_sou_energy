@@ -43,6 +43,6 @@ class NotificationList extends Template
 
     public function getMarkAsReadUrl(int $id): string
     {
-        return $this->getUrl('souenergy/notification/read', ['id' => $id]);
+        return $this->getUrl('notificacoes/index/read', ['id' => $id]);
     }
 }

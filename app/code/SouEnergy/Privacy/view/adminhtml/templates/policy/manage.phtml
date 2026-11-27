@@ -1,0 +1,101 @@
+<?php
+/** @var \SouEnergy\Privacy\Block\Adminhtml\Policy\Manage $block */
+$currentVersion = $block->getCurrentVersion();
+$totalCustomers = $block->getTotalCustomersCount();
+$updatedCustomers = $block->getUpdatedCustomersCount();
+$pendingCustomers = max(0, $totalCustomers - $updatedCustomers);
+?>
+<div class="souenergy-privacy-manage">
+    <div class="souenergy-stat-grid">
+        <div class="souenergy-stat-card souenergy-stat-card--accent">
+            <div class="souenergy-stat-card__label">Versão Vigente Atual</div>
+            <div class="souenergy-stat-card__value"><?= $block->escapeHtml($currentVersion) ?></div>
+            <div class="souenergy-stat-card__meta souenergy-stat-card__meta--ok">Versão Oficial Ativa</div>
+        </div>
+
+        <div class="souenergy-stat-card souenergy-stat-card--success">
+            <div class="souenergy-stat-card__label">Usuários Atualizados</div>
+            <div class="souenergy-stat-card__value souenergy-stat-card__value--success">
+                <?= (int)$updatedCustomers ?>
+                <span class="souenergy-stat-card__total">/ <?= (int)$totalCustomers ?></span>
+            </div>
+            <div class="souenergy-stat-card__meta">Aceitaram a versão <?= $block->escapeHtml($currentVersion) ?></div>
+        </div>
+
+        <div class="souenergy-stat-card souenergy-stat-card--danger">
+            <div class="souenergy-stat-card__label">Usuários Pendentes</div>
+            <div class="souenergy-stat-card__value souenergy-stat-card__value--danger"><?= (int)$pendingCustomers ?></div>
+            <div class="souenergy-stat-card__meta souenergy-stat-card__meta--danger">Desatualizados ou sem aceite</div>
+        </div>
+    </div>
+
+    <div class="souenergy-form-card">
+        <div class="souenergy-form-card__header">
+            <h2>Publicar Nova Versão da Política de Privacidade</h2>
+            <p>
+                Ao salvar uma nova versão abaixo, o sistema atualizará a versão e o texto vigentes e
+                <strong>disparará automaticamente uma notificação</strong> para todos os usuários com o link para confirmação do aceite.
+            </p>
+        </div>
+
+        <form action="<?= $block->escapeUrl($block->getSaveUrl()) ?>" method="post" id="souenergy-privacy-form">
+            <?= $block->getBlockHtml('formkey') ?>
+
+            <div class="souenergy-field">
+                <label for="version">Nova Versão da Política <span class="souenergy-required">*</span></label>
+                <input type="text"
+                       id="version"
+                       name="version"
+                       required
+                       placeholder="Ex: v2.0"
+                       class="souenergy-input souenergy-input--short"/>
+                <div class="souenergy-field__hint">
+                    Versão atual vigente: <strong><?= $block->escapeHtml($currentVersion) ?></strong>
+                </div>
+            </div>
+
+            <div class="souenergy-field">
+                <label for="content">Texto da Política de Privacidade <span class="souenergy-required">*</span></label>
+                <textarea id="content"
+                          name="content"
+                          rows="12"
+                          required
+                          placeholder="Insira o texto completo da Política de Privacidade que será exibido aos usuários"
+                          class="souenergy-textarea"><?= $block->escapeHtml($block->getCurrentContent()) ?></textarea>
+                <div class="souenergy-field__hint">
+                    Este texto será exibido integralmente na página de Política de Privacidade para os usuários.
+                </div>
+            </div>
+
+            <div class="souenergy-field">
+                <label for="title">Título da Notificação Automática</label>
+                <input type="text"
+                       id="title"
+                       name="title"
+                       value="Atualização da Política de Privacidade"
+                       placeholder="Título que os usuários verão na notificação"
+                       class="souenergy-input"/>
+            </div>
+
+            <div class="souenergy-field">
+                <label for="message">Mensagem da Notificação</label>
+                <textarea id="message"
+                          name="message"
+                          rows="4"
+                          placeholder="Mensagem explicando as atualizações e orientando o aceite"
+                          class="souenergy-textarea">Publicamos uma nova versão da Política de Privacidade. Por favor, acesse o link para ler e confirmar seu aceite.</textarea>
+            </div>
+
+            <div class="souenergy-notice-box">
+                O botão da notificação será gerado automaticamente como
+                <strong>"Acessar Política de Privacidade"</strong> apontando para <code>privacidade/index/index</code>.
+            </div>
+
+            <div>
+                <button type="submit" class="souenergy-submit-btn">
+                    Salvar Nova Versão e Notificar Usuários
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

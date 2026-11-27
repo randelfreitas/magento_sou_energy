@@ -1,0 +1,76 @@
+<?php
+/** @var \Magento\Customer\Block\Form\Login $block */
+?>
+<div class="souenergy-login-wrapper">
+    <div class="souenergy-login-header">
+        <h2 class="souenergy-login-title"><?= $block->escapeHtml(__('Login')) ?></h2>
+        <p class="souenergy-login-subtitle">
+            <?= $block->escapeHtml(__('Acesse sua conta com seu endereço de e-mail e senha.')) ?>
+        </p>
+    </div>
+
+    <form class="form form-login"
+          action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>"
+          method="post"
+          id="login-form"
+          data-mage-init='{"validation":{}}'>
+        <?= $block->getBlockHtml('formkey') ?>
+
+        <fieldset class="fieldset login souenergy-login-fieldset">
+            <div class="field email required souenergy-login-field">
+                <label class="label souenergy-login-label" for="email">
+                    <span><?= $block->escapeHtml(__('E-mail')) ?></span> <span class="souenergy-required">*</span>
+                </label>
+                <div class="control">
+                    <input name="login[username]"
+                           value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>"
+                           <?php if ($block->isAutocompleteDisabled()): ?> autocomplete="off"<?php endif; ?>
+                           id="email"
+                           type="email"
+                           class="input-text souenergy-login-input"
+                           title="<?= $block->escapeHtmlAttr(__('E-mail')) ?>"
+                           placeholder="seuemail@souenergy.com.br"
+                           data-mage-init='{"mage/trim-input":{}}'
+                           data-validate="{required:true, 'validate-email':true}">
+                </div>
+            </div>
+
+            <div class="field password required souenergy-login-field">
+                <label for="password" class="label souenergy-login-label">
+                    <span><?= $block->escapeHtml(__('Senha')) ?></span> <span class="souenergy-required">*</span>
+                </label>
+                <div class="control">
+                    <input name="login[password]"
+                           type="password"
+                           <?php if ($block->isAutocompleteDisabled()): ?> autocomplete="off"<?php endif; ?>
+                           class="input-text souenergy-login-input"
+                           id="password"
+                           title="<?= $block->escapeHtmlAttr(__('Senha')) ?>"
+                           placeholder="••••••••••••"
+                           data-validate="{required:true}">
+                </div>
+            </div>
+
+            <div class="field choice souenergy-login-choice" data-bind="scope: 'showPassword'">
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            </div>
+
+            <?= $block->getChildHtml('form_additional_info') ?>
+
+            <div class="actions-toolbar souenergy-login-actions">
+                <button type="submit"
+                        class="action login primary souenergy-login-submit"
+                        name="send"
+                        id="send2">
+                    <span><?= $block->escapeHtml(__('Entrar')) ?></span>
+                </button>
+
+                <div class="souenergy-login-remind">
+                    <a class="action remind" href="<?= $block->escapeUrl($block->getForgotPasswordUrl()) ?>">
+                        <span><?= $block->escapeHtml(__('Esqueceu sua senha?')) ?></span>
+                    </a>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

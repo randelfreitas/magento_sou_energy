@@ -283,9 +283,9 @@ Você pode configurar essas credenciais globalmente no arquivo `~/.composer/auth
     php bin/magento module:disable Magento_TwoFactorAuth Magento_AdminAdobeImsTwoFactorAuth
     ```
 
-5. **Habilitar o Módulo SouEnergy e Atualizar o Banco:**
+5. **Habilitar os Módulos SouEnergy e Atualizar o Banco:**
     ```bash
-    php bin/magento module:enable SouEnergy_Notification
+    php bin/magento module:enable SouEnergy_Portal SouEnergy_Notification SouEnergy_Privacy
     php -d memory_limit=2G bin/magento setup:upgrade --keep-generated
     php -d memory_limit=2G bin/magento setup:di:compile
     php bin/magento cache:flush
@@ -340,36 +340,43 @@ Você pode configurar essas credenciais globalmente no arquivo `~/.composer/auth
 
 ## Visão Geral das Telas e Arquitetura do Sistema
 
+O projeto é organizado em **três módulos independentes** sob o vendor `SouEnergy`:
+
+| Módulo | Responsabilidade |
+| :--- | :--- |
+| **`SouEnergy_Portal`** | Experiência de acesso e identidade: redirecionamento da raiz, login minimalista, logotipo SouEnergy, painel Minha Conta enxuto, menu *Gerenciar Usuários* no Admin e criação do cliente padrão via Data Patch. |
+| **`SouEnergy_Notification`** | Gestão completa de notificações: tabela `souenergy_notification`, repositório, sino no cabeçalho com contador em tempo real, central *Minhas Notificações* (`/notificacoes/index/index/`) e CRUD administrativo. |
+| **`SouEnergy_Privacy`** | Gestão da Política de Privacidade: versão e texto editáveis salvos no banco, atributos EAV de auditoria no cliente (`privacy_policy_version` e `privacy_policy_accepted_at`), modal de aceite, página `/privacidade/index/index/` e disparo automático de notificação ao publicar nova versão. |
+
 ### 1. Painel Administrativo <a id="telas-de-admin"></a>
 
 O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 
-- **Gerenciar Usuários (`/admin/souenergy_notification/customer/index`):**
+- **Gerenciar Usuários (`/admin/souenergy_portal/customer/index`):**
     - Grid de clientes com colunas dedicadas para auditoria da política de privacidade.
     - O cabeçalho da coluna de política de privacidade indica a versão vigente do sistema (ex: `Política de Privacidade (Vigente: v2.0)`).
     - Cada registro exibe badges de conformidade:
-        - `✓ v2.0 (Atualizado)`: Usuário já aceitou a versão vigente.
-        - `⚠️ Desatualizado (v1.0)`: Usuário com versão anterior.
-        - `❌ Não Aceitou`: Usuário com aceite pendente.
+        - `v2.0 (Atualizado)`: Usuário já aceitou a versão vigente.
+        - `Desatualizado (v1.0)`: Usuário com versão anterior.
+        - `Não Aceitou`: Usuário com aceite pendente.
     - Exibe data e hora exatas em que o aceite foi registrado pelo cliente.
 
 - **Gerenciar Notificações (`/admin/souenergy_notification/notification/index`):**
-    - Grid com ID, Título, Mensagem, Destinatário (Geral ou Cliente Específico), Link de Ação e Status (`✓ Ativa` / `✕ Inativa`).
+    - Grid com ID, Título, Mensagem, Destinatário (Geral ou Cliente Específico), Status (`Ativa` / `Inativa`) e Lida.
     - Coluna de Ações com alternância de status em 1 clique (Ativar / Desativar) e botão de exclusão.
     - Desativar uma notificação reflete instantaneamente no storefront, ocultando-a do sino e da listagem do cliente.
 
-- **Criar Notificação (`/admin/souenergy_notification/notification/new`):**
-    - Formulário administrativo com seleção de tipo de destinatário (Todos os clientes ou cliente específico via autocomplete/ID).
+- **Criar Notificação (`/admin/souenergy_notification/notification/newaction`):**
+    - Formulário administrativo com seleção de destinatário (Todos os clientes ou cliente específico).
     - Campos opcionais para URL de ação (`action_url`) e rótulo do botão (`action_label`), permitindo encaminhar o cliente diretamente para qualquer rota.
 
-- **Gerenciar Política de Privacidade (`/admin/souenergy_notification/terms/manage`):**
-    - Interface em tela cheia centralizada com quatro cards de métricas consolidadas:
-        - _Versão Vigente_: Identificação da versão ativa no momento.
-        - _Total de Clientes_: Número total de usuários cadastrados na base.
-        - _Clientes com a Versão Vigente_: Total de usuários com aceite confirmado na versão atual.
-        - _Aceites Pendentes_: Quantidade de clientes que necessitam atualizar o consentimento.
-    - Formulário de publicação de nova versão (campo de versão e campo de texto legal).
-    - Botão de publicação que grava a nova versão e dispara automaticamente uma notificação geral para todos os usuários.
+- **Gerenciar Política de Privacidade (`/admin/souenergy_privacy/policy/index`):**
+    - Interface com três cards de métricas consolidadas:
+        - _Versão Vigente Atual_: Identificação da versão ativa no momento.
+        - _Usuários Atualizados_: Total de usuários com aceite confirmado na versão atual (com o total de clientes da base).
+        - _Usuários Pendentes_: Quantidade de clientes desatualizados ou sem aceite.
+    - Formulário de publicação de nova versão (versão, texto completo da Política de Privacidade, título e mensagem da notificação).
+    - Botão de publicação que grava a nova versão e o novo texto no banco e dispara automaticamente uma notificação geral para todos os usuários.
 
 ---
 
@@ -391,15 +398,15 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 - **Painel Minha Conta (`/customer/account/`):**
     - Interface enxuta focada em dados essenciais de cadastro.
     - Menu lateral simplificado contendo apenas:
-        - _Dados da Conta_
+        - _Minha Conta_
         - _Minhas Notificações_
 
-- **Central de Notificações do Cliente (`/souenergy_notification/customer/index/`):**
-    - Listagem completa das notificações destinadas ao usuário ou de caráter geral.
+- **Central de Notificações do Cliente (`/notificacoes/index/index/`):**
+    - Listagem completa das notificações ativas destinadas ao usuário ou de caráter geral.
     - Botão para marcar mensagem como lida e botão de ação direta direcionando para a página informada no cadastro da notificação.
 
-- **Página de Política de Privacidade (`/souenergy/terms/index/`):**
-    - Exibição integral do texto da versão vigente da política de privacidade.
+- **Página de Política de Privacidade (`/privacidade/index/index/`):**
+    - Exibição integral do texto da versão vigente da política de privacidade salvo no banco.
     - Botão de confirmação formal ("Li e Aceito a Versão ..."), que grava o aceite e o timestamp auditável no perfil do usuário.
 
 - **Modal de Política de Privacidade:**
@@ -442,7 +449,7 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 4. Atualize o texto no campo de conteúdo com novas cláusulas e clique em **Salvar Nova Versão e Notificar Usuários**.
 5. **Resultado esperado:** A página recarrega com mensagem de sucesso confirmando a atualização e os cards passam a exibir a nova versão vigente com contadores recalculados.
 6. Clique no menu lateral em **Gerenciar Notificações**.
-7. **Resultado esperado:** Uma nova notificação geral foi criada de forma automática pelo sistema, apontando para a URL da política de privacidade e com status `✓ Ativa`.
+7. **Resultado esperado:** Uma nova notificação geral foi criada de forma automática pelo sistema, apontando para a URL da política de privacidade (`privacidade/index/index`) e com status `Ativa`.
 
 ---
 
@@ -450,10 +457,10 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 
 1. Retorne à aba do usuário comum (`randel@souenergy.com.br`) e atualize a página (ou realize logout e login novamente).
 2. **Resultado esperado:**
-    - O **Modal de Atualização da Política de Privacidade** é aberto em primeiro plano sobre a tela, informando que a política de privacidade foi atualizada.
+    - O **Modal de Política de Privacidade** é aberto em primeiro plano sobre a tela, informando que a política de privacidade foi atualizada.
     - O sino no cabeçalho exibe o badge numérico incrementado com a nova notificação.
-3. No modal, clique no botão **Ler e Aceitar Política de Privacidade ->**.
-4. O sistema abrirá a página [http://127.0.0.1:8000/souenergy/terms/index/](http://127.0.0.1:8000/souenergy/terms/index/) com o texto completo da versão vigente.
+3. No modal, clique no botão **Ler e Aceitar Política de Privacidade**.
+4. O sistema abrirá a página [http://127.0.0.1:8000/privacidade/index/index/](http://127.0.0.1:8000/privacidade/index/index/) com o texto completo da versão vigente.
 5. Clique no botão **Li e Aceito a Versão ...**.
 6. **Resultado esperado:** O aceite é processado, o usuário é redirecionado para Minha Conta com mensagem de sucesso e o modal **não é mais exibido** ao navegar ou atualizar a página.
 
@@ -462,9 +469,9 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 ### Caso de Teste 5: Verificação de Auditoria no Admin Após Aceite
 
 1. Retorne à aba do Admin e clique novamente em **Gerenciar Usuários**.
-2. **Resultado esperado:** O badge do cliente Marcos Randel foi atualizado para `✓ v2.0 (Atualizado)` e o campo de data/hora reflete o timestamp do novo consentimento.
+2. **Resultado esperado:** O badge do cliente Marcos Randel foi atualizado para `v2.0 (Atualizado)` e o campo de data/hora reflete o timestamp do novo consentimento.
 3. Acesse **Gerenciar Política de Privacidade**.
-4. **Resultado esperado:** O card _Clientes com a Versão Vigente_ foi incrementado e o card de _Aceites Pendentes_ foi reduzido.
+4. **Resultado esperado:** O card _Usuários Atualizados_ foi incrementado e o card _Usuários Pendentes_ foi reduzido.
 
 ---
 
@@ -473,7 +480,7 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 1. No Admin, acesse **Gerenciar Política de Privacidade** e publique uma versão experimental (ex: `v3.0`).
 2. Acesse o menu **Gerenciar Notificações**.
 3. Localize a notificação correspondente à versão `v3.0` e, na coluna de Ações, clique em **Desativar**.
-4. **Resultado esperado:** O status da linha muda imediatamente para `✕ Inativa`.
+4. **Resultado esperado:** O status da linha muda imediatamente para `Inativa`.
 5. Volte à aba do usuário comum e recarregue a página.
 6. **Resultado esperado:**
     - A notificação inativa deixa de aparecer no sino e em **Minhas Notificações**.

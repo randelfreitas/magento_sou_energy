@@ -1,0 +1,173 @@
+.header-notification-bell {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.souenergy-bell-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: inherit;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.souenergy-bell-label {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.souenergy-bell-badge {
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 1px 6px;
+    margin-left: 2px;
+}
+
+.souenergy-notifications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 12px;
+}
+
+.souenergy-notifications-header h2 {
+    font-size: 22px;
+    color: #1e293b;
+    margin: 0;
+    font-weight: 700;
+}
+
+.souenergy-notifications-total {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.souenergy-notifications-empty {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #64748b;
+}
+
+.souenergy-notifications-empty p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.souenergy-notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.souenergy-notification-card {
+    border-radius: 8px;
+    padding: 18px 20px;
+    border: 1px solid #e2e8f0;
+    border-left-width: 5px;
+    background: #ffffff;
+}
+
+.souenergy-notification-card.is-read {
+    border-left-color: #94a3b8;
+}
+
+.souenergy-notification-card.is-unread {
+    border-color: #fed7aa;
+    border-left-color: #f57c00;
+    background: #fffbeb;
+}
+
+.souenergy-notification-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    gap: 12px;
+}
+
+.souenergy-notification-card__title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.souenergy-notification-card__title-wrap h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+.souenergy-notification-badge-new {
+    background: #f57c00;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+
+.souenergy-notification-card__date {
+    font-size: 12px;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+.souenergy-notification-card__message {
+    font-size: 14px;
+    color: #475569;
+    margin: 0 0 14px 0;
+    line-height: 1.5;
+}
+
+.souenergy-notification-card__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    align-items: center;
+}
+
+.souenergy-notification-action-btn {
+    background: #f57c00;
+    color: #ffffff !important;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 6px;
+}
+
+.souenergy-notification-read-btn {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+}
+
+.souenergy-notification-read-status {
+    font-size: 12px;
+    color: #10b981;
+    font-weight: 600;
+}

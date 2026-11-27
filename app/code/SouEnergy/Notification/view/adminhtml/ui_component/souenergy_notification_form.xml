@@ -120,7 +120,7 @@
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">notification</item>
                     <item name="dataScope" xsi:type="string">action_url</item>
-                    <item name="notice" xsi:type="string" translate="true">Opcional. Ex: souenergy/terms/index</item>
+                    <item name="notice" xsi:type="string" translate="true">Opcional. Ex: privacidade/index/index</item>
                 </item>
             </argument>
         </field>
@@ -132,7 +132,7 @@
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">notification</item>
                     <item name="dataScope" xsi:type="string">action_label</item>
-                    <item name="notice" xsi:type="string" translate="true">Opcional. Ex: Acessar Política de Privacidade →</item>
+                    <item name="notice" xsi:type="string" translate="true">Opcional. Ex: Acessar Política de Privacidade</item>
                 </item>
             </argument>
         </field>

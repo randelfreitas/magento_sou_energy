@@ -14,9 +14,9 @@ class ActiveStatus extends Column
             foreach ($dataSource['data']['items'] as &$item) {
                 $isActive = isset($item[$fieldName]) ? (bool)$item[$fieldName] : true;
                 if ($isActive) {
-                    $item[$fieldName] = '<span style="background: #ecfdf5; color: #047857; font-weight: 700; padding: 4px 10px; border-radius: 12px; font-size: 11px; display: inline-block;">✓ Ativa</span>';
+                    $item[$fieldName] = '<span class="grid-severity-notice"><span>Ativa</span></span>';
                 } else {
-                    $item[$fieldName] = '<span style="background: #fee2e2; color: #991b1b; font-weight: 700; padding: 4px 10px; border-radius: 12px; font-size: 11px; display: inline-block;">✕ Inativa</span>';
+                    $item[$fieldName] = '<span class="grid-severity-critical"><span>Inativa</span></span>';
                 }
             }
         }

@@ -1,0 +1,9 @@
+<?php
+/** @var \Magento\Theme\Block\Html\Header\Logo $block */
+$homeUrl = $block->getUrl('customer/account');
+?>
+<a class="logo souenergy-logo" href="<?= $block->escapeUrl($homeUrl) ?>" title="Sou Energy">
+    <span class="souenergy-logo__text">
+        Sou<span class="souenergy-logo__accent">Energy</span>
+    </span>
+</a>

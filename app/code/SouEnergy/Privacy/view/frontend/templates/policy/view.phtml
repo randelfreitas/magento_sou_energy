@@ -1,0 +1,77 @@
+<?php
+/** @var \SouEnergy\Privacy\Block\Policy\View $block */
+$currentVersion = $block->getCurrentVersion();
+$currentContent = $block->getCurrentContent();
+$isLoggedIn = $block->isLoggedIn();
+$isUpdated = $block->isUserUpdated();
+$userVersion = $block->getUserVersion();
+$userAcceptedAt = $block->getUserAcceptedAt();
+?>
+<div class="souenergy-policy-container">
+    <div class="souenergy-policy-header">
+        <div>
+            <span class="souenergy-policy-kicker">Atualização Legal</span>
+            <h1 class="souenergy-policy-title">
+                Política de Privacidade (<?= $block->escapeHtml($currentVersion) ?>)
+            </h1>
+            <p class="souenergy-policy-meta">
+                Versão Vigente: <strong><?= $block->escapeHtml($currentVersion) ?></strong>
+                | Revisão: <?= $block->escapeHtml(date('d/m/Y')) ?>
+            </p>
+        </div>
+
+        <?php if ($isUpdated): ?>
+            <div class="souenergy-policy-badge souenergy-policy-badge--ok">
+                Política Aceita (<?= $block->escapeHtml($currentVersion) ?>)
+            </div>
+        <?php elseif ($isLoggedIn && $userVersion): ?>
+            <div class="souenergy-policy-badge souenergy-policy-badge--warn">
+                Nova Versão Disponível (Sua versão: <?= $block->escapeHtml($userVersion) ?>)
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <div class="souenergy-policy-content">
+        <?= nl2br($block->escapeHtml($currentContent)) ?>
+    </div>
+
+    <?php if ($isUpdated): ?>
+        <div class="souenergy-policy-banner souenergy-policy-banner--ok">
+            <div>
+                <h4>Você está com a versão mais recente aceita</h4>
+                <p>
+                    Você realizou o aceite da versão <strong><?= $block->escapeHtml($currentVersion) ?></strong>
+                    <?php if ($userAcceptedAt): ?>
+                        em <strong><?= $block->escapeHtml(date('d/m/Y \à\s H:i:s', strtotime($userAcceptedAt))) ?></strong>
+                    <?php endif; ?>.
+                </p>
+            </div>
+            <div>
+                <a href="<?= $block->escapeUrl($block->getNotificationsUrl()) ?>" class="souenergy-policy-btn souenergy-policy-btn--ok">
+                    Voltar para Notificações
+                </a>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="souenergy-policy-banner souenergy-policy-banner--pending">
+            <div>
+                <h4>Confirmação de Aceite (Versão <?= $block->escapeHtml($currentVersion) ?>)</h4>
+                <p>Ao clicar no botão ao lado, você confirma que leu e concorda com a nova versão das diretrizes.</p>
+            </div>
+            <div>
+                <?php if ($isLoggedIn): ?>
+                    <form action="<?= $block->escapeUrl($block->getAcceptUrl()) ?>" method="post" class="souenergy-policy-form">
+                        <?= $block->getBlockHtml('formkey') ?>
+                        <button type="submit" class="souenergy-policy-btn souenergy-policy-btn--accept">
+                            Li e Aceito a Versão <?= $block->escapeHtml($currentVersion) ?>
+                        </button>
+                    </form>
+                <?php else: ?>
+                    <a href="<?= $block->escapeUrl($block->getLoginUrl()) ?>" class="souenergy-policy-btn souenergy-policy-btn--login">
+                        Faça Login para Aceitar
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
