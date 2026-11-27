@@ -29,7 +29,9 @@ class NotificationActions extends Column
             foreach ($dataSource['data']['items'] as &$item) {
                 $name = $this->getData('name');
                 if (isset($item['entity_id'])) {
-                    $isActive = isset($item['is_active']) ? (bool)$item['is_active'] : true;
+                    $isActive = array_key_exists('is_active_raw', $item)
+                        ? (bool)$item['is_active_raw']
+                        : (isset($item['is_active']) ? (bool)$item['is_active'] : true);
 
                     $item[$name]['toggle'] = [
                         'href' => $this->urlBuilder->getUrl(

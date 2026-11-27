@@ -13,6 +13,7 @@ class ActiveStatus extends Column
             $fieldName = $this->getName();
             foreach ($dataSource['data']['items'] as &$item) {
                 $isActive = isset($item[$fieldName]) ? (bool)$item[$fieldName] : true;
+                $item['is_active_raw'] = $isActive;
                 if ($isActive) {
                     $item[$fieldName] = '<span class="grid-severity-notice"><span>Ativa</span></span>';
                 } else {
