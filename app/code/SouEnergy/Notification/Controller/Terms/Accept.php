@@ -51,20 +51,19 @@ class Accept extends Action
         $currentVersion = $this->termsConfig->getCurrentVersion();
 
         try {
-            // 1. Grava a versão vigente atual no perfil do cliente
+            // Grava a versão vigente atual no perfil do cliente
             $customer = $this->customerRepository->getById($customerId);
             $customer->setCustomAttribute('terms_version', $currentVersion);
             $customer->setCustomAttribute('terms_accepted_at', (new DateTime())->format('Y-m-d H:i:s'));
             $this->customerRepository->save($customer);
 
-            // 2. Marca notificações pendentes da Política de Privacidade como lidas
+            // Marca notificações pendentes da Política de Privacidade como lidas
             $collection = $this->collectionFactory->create();
             $collection->addFieldToFilter(
-                [NotificationInterface::CUSTOMER_ID, NotificationInterface::CUSTOMER_ID, NotificationInterface::CUSTOMER_ID],
+                [NotificationInterface::CUSTOMER_ID, NotificationInterface::CUSTOMER_ID],
                 [
                     ['eq' => $customerId],
-                    ['null' => true],
-                    ['eq' => 0]
+                    ['null' => true]
                 ]
             );
             $collection->addFieldToFilter(NotificationInterface::IS_READ, 0);

@@ -30,11 +30,10 @@ class NotificationList extends Template
         $customerId = (int)$this->customerSession->getCustomerId();
         $collection = $this->collectionFactory->create();
         $collection->addFieldToFilter(
-            [NotificationInterface::CUSTOMER_ID, NotificationInterface::CUSTOMER_ID, NotificationInterface::CUSTOMER_ID],
+            [NotificationInterface::CUSTOMER_ID, NotificationInterface::CUSTOMER_ID],
             [
                 ['eq' => $customerId],
-                ['null' => true],
-                ['eq' => 0]
+                ['null' => true]
             ]
         );
         $collection->addFieldToFilter(NotificationInterface::IS_ACTIVE, 1);

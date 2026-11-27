@@ -24,14 +24,6 @@ interface NotificationRepositoryInterface
     public function getById(int $entityId): NotificationInterface;
 
     /**
-     * Mark a notification as read for the currently authenticated customer
-     *
-     * @param int $entityId
-     * @return bool
-     */
-    public function markAsRead(int $entityId): bool;
-
-    /**
      * Delete notification
      *
      * @param NotificationInterface $notification
