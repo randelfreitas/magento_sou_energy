@@ -1,6 +1,6 @@
 # Magento Sou Energy - Módulo de Autenticação, Notificações e Política de Privacidade
 
-Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na implementação de um sistema modular de autenticação, área restrita de usuário comum, central de notificações e gestão de política de privacidade, com interface administrativa exclusiva e navegação nativa.
+Projeto desenvolvido em **Magento 2 Open Source (2.4.7-p3)** com foco na implementação de um sistema modular de autenticação, área restrita de usuário comum, central de notificações e gestão de política de privacidade, com interface administrativa.
 
 ---
 
@@ -364,7 +364,7 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 - **Gerenciar Notificações (`/admin/souenergy_notification/notification/index`):**
     - Grid com ID, Título, Mensagem, Destinatário (Geral ou Cliente Específico), Status (`Ativa` / `Inativa`) e Lida.
     - Coluna de Ações com alternância de status em 1 clique (Ativar / Desativar) e botão de exclusão.
-    - Desativar uma notificação reflete instantaneamente no storefront, ocultando-a do sino e da listagem do cliente.
+    - Desativar uma notificação reflete instantaneamente, ocultando-a do sino e da listagem do cliente.
 
 - **Criar Notificação (`/admin/souenergy_notification/notification/newaction`):**
     - Formulário administrativo com seleção de destinatário (Todos os clientes ou cliente específico).
@@ -382,18 +382,9 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 
 ### 2. Área do Usuário Comum (Storefront) <a id="telas-de-usuario-comum"></a>
 
-- **Redirecionamento Automático da Raiz (`/`):**
-    - Visitantes não autenticados que acessam `http://127.0.0.1:8000/` são redirecionados para a tela de Login.
-    - Usuários já autenticados são direcionados diretamente para o painel Minha Conta.
-
 - **Tela de Login (`/customer/account/login/`):**
     - Card centralizado minimalista com identidade corporativa SouEnergy.
     - Remoção de elementos desnecessários de loja (como vitrines, bloco de novos clientes e botões secundários).
-
-- **Cabeçalho da Loja:**
-    - Logotipo oficial SouEnergy no topo esquerdo.
-    - Sino de notificações com contador numérico de mensagens pendentes ativas, atualizado em tempo real.
-    - Links limpos para acesso à conta e encerramento de sessão.
 
 - **Painel Minha Conta (`/customer/account/`):**
     - Interface enxuta focada em dados essenciais de cadastro.
@@ -453,7 +444,7 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
 
 ---
 
-### Caso de Teste 4: Exibição do Modal no Storefront e Confirmação de Aceite
+### Caso de Teste 4: Exibição do Modal e Confirmação de Aceite
 
 1. Retorne à aba do usuário comum (`randel@souenergy.com.br`) e atualize a página (ou realize logout e login novamente).
 2. **Resultado esperado:**
@@ -461,7 +452,7 @@ O menu lateral foi remodelado com três entradas diretas de primeiro nível:
     - O sino no cabeçalho exibe o badge numérico incrementado com a nova notificação.
 3. No modal, clique no botão **Ler e Aceitar Política de Privacidade**.
 4. O sistema abrirá a página [http://127.0.0.1:8000/privacidade/index/index/](http://127.0.0.1:8000/privacidade/index/index/) com o texto completo da versão vigente.
-5. Clique no botão **Li e Aceito a Versão ...**.
+5. Clique no botão **Li e Aceito a Versão**.
 6. **Resultado esperado:** O aceite é processado, o usuário é redirecionado para Minha Conta com mensagem de sucesso e o modal **não é mais exibido** ao navegar ou atualizar a página.
 
 ---
